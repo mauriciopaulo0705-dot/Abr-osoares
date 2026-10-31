@@ -1,0 +1,27 @@
+name: Importar site atual
+on: push
+permissions:
+  contents: write
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Baixar arquivos publicados em www.abraosoares.com
+        run: |
+          set -e
+          mkdir -p assets
+          curl -fsSL -o index.html https://www.abraosoares.com/index.html
+          curl -fsSL -o support.js https://www.abraosoares.com/support.js
+          curl -fsSL -o assets/viva-juara.png https://www.abraosoares.com/assets/viva-juara.png
+          curl -fsSL -o assets/vitoria-loop.mp4 https://www.abraosoares.com/assets/vitoria-loop.mp4
+          sha1sum index.html support.js assets/*
+          ls -la . assets
+      - name: Salvar no repositório
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -q .github/workflows/importar-site.yml
+          git add -A
+          git commit -m "Importa o site publicado (index.html, support.js, assets)"
+          git push
