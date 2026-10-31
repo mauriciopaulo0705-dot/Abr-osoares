@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abrão Soares Corretores de Imóveis</title>
+<meta name="description" content="Imóveis especiais em Serra e Vitória/ES. Casas, apartamentos e terrenos selecionados pela Abrão Soares Corretores de Imóveis.">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&amp;family=Manrope:wght@400;500;600&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#faf9f6;color:#1b3043;font-family:'Hanken Grotesk',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
+*{box-sizing:border-box}
+#menu-btn{display:none}
+@media (max-width:980px){
+#site-header{min-height:76px !important;padding:0 16px !important;gap:12px !important}
+#site-logo{height:50px !important}
+#site-nav{display:none !important}
+#site-wa{padding:13px 14px !important;font-size:12px !important}
+#menu-btn{display:inline-flex !important}
+}
+@media (min-width:981px){
+#mobile-menu{display:none !important}
+}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+  <header id="site-header" style="position:sticky;top:0;z-index:30;background:#faf9f6;box-shadow:0 1px 0 #e3e1dc;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 clamp(20px,6.5vw,100px);min-height:122px;font-family:'Manrope',sans-serif">
+    <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center"><img src="https://imagens.tecimob.com.br/media/b8fd0fa4-f9e8-4ccd-a6c5-7f0c967d46c5/settings/logos/270x140/outside/cb3502e9-447e-4fc0-a430-d721520da4481758797153FHiW.png" id="site-logo" alt="Abrão Soares Corretores de Imóveis" style="height:72px;width:auto;display:block"></a>
+    <nav id="site-nav" style="display:flex;align-items:center;gap:clamp(16px,2.2vw,30px);font-size:14px;flex-wrap:wrap;justify-content:center">
+      <a href="#" onClick="{{ goHome }}" style="position:relative;padding:12px 0;color:{{ navHome }}">Início<span style="position:absolute;left:50%;bottom:-8px;width:18px;height:2px;margin-left:-9px;background:#baa075;opacity:{{ navHomeLine }}"></span></a>
+      <a href="#" onClick="{{ goCatalog }}" style="position:relative;padding:12px 0;color:{{ navImoveis }}">Imóveis<span style="position:absolute;left:50%;bottom:-8px;width:18px;height:2px;margin-left:-9px;background:#baa075;opacity:{{ navImoveisLine }}"></span></a>
+      <a href="#contato" style="padding:12px 0">Sobre</a>
+      <a href="https://wa.me/5527988287777?text=Ol%C3%A1!%20Gostaria%20de%20simular%20um%20financiamento." target="_blank" style="padding:12px 0">Financiamento</a>
+      <a href="https://wa.me/5527988287777?text=Ol%C3%A1!%20Quero%20vender%20meu%20im%C3%B3vel." target="_blank" style="padding:12px 0">Venda seu imóvel</a>
+      <a href="#contato" style="padding:12px 0">Contato</a>
+    </nav>
+    <div style="display:flex;align-items:stretch;gap:10px">
+      <a id="site-wa" href="https://wa.me/5527988287777" target="_blank" style="border:1px solid #c4b18d;padding:17px 19px;font-size:13px;white-space:nowrap" style-hover="background:#eee8dc">WhatsApp</a>
+      <button id="menu-btn" type="button" onClick="{{ toggleMenu }}" aria-label="{{ menuLabel }}" aria-expanded="{{ menuExpanded }}" style="font:inherit;align-items:center;justify-content:center;width:44px;min-height:44px;padding:0;background:transparent;border:1px solid #c4b18d;color:#1b3043;cursor:pointer">
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1b3043" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></sc-if>
+        <sc-if value="{{ menuClosed }}" hint-placeholder-val="{{ true }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1b3043" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></sc-if>
+      </button>
+    </div>
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <nav id="mobile-menu" style="position:absolute;top:100%;left:0;right:0;background:#faf9f6;border-top:1px solid #e3e1dc;box-shadow:0 18px 30px #1b30431f;display:flex;flex-direction:column;padding:4px 16px 18px;font-size:16px">
+        <a href="#" onClick="{{ goHome }}" style="padding:15px 0;border-bottom:1px solid #eeece7;color:{{ navHome }}">Início</a>
+        <a href="#" onClick="{{ goCatalog }}" style="padding:15px 0;border-bottom:1px solid #eeece7;color:{{ navImoveis }}">Imóveis</a>
+        <a href="#contato" onClick="{{ closeMenu }}" style="padding:15px 0;border-bottom:1px solid #eeece7">Sobre</a>
+        <a href="https://wa.me/5527988287777?text=Ol%C3%A1!%20Gostaria%20de%20simular%20um%20financiamento." target="_blank" onClick="{{ closeMenu }}" style="padding:15px 0;border-bottom:1px solid #eeece7">Financiamento</a>
+        <a href="https://wa.me/5527988287777?text=Ol%C3%A1!%20Quero%20vender%20meu%20im%C3%B3vel." target="_blank" onClick="{{ closeMenu }}" style="padding:15px 0;border-bottom:1px solid #eeece7">Venda seu imóvel</a>
+        <a href="#contato" onClick="{{ closeMenu }}" style="padding:15px 0">Contato</a>
+      </nav>
+    </sc-if>
+  </header>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <section style="position:relative;isolation:isolate;min-height:clamp(420px,58vh,620px);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;overflow:hidden;background:#1b3043">
+      <video src="assets/vitoria-loop.mp4" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" ref="{{ videoRef }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2"></video>
+      <div style="position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#0c2037b0,#0c203780)"></div>
+      <div style="padding:64px 24px;max-width:900px">
+        <div style="font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;letter-spacing:.2em;color:#d9bf8f;margin-bottom:26px">ENCONTRE O SEU LUGAR</div>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(48px,6vw,84px);line-height:1.05;letter-spacing:-.01em;margin:0">Imóveis especiais.<br><i style="font-weight:400;color:#e6d6b8">Novas possibilidades.</i></h1>
+        <p style="font-family:'Manrope',sans-serif;font-size:16px;color:#f1eee8;margin:26px 0 0">Uma seleção para diferentes formas de viver bem.</p>
+      </div>
+    </section>
+
+    <section id="viva-juara" style="padding:clamp(48px,7vw,96px) clamp(20px,4vw,56px) 0">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));border:1px solid #e3e1dc;background:#fff;border-radius:6px;overflow:hidden">
+        <div style="background:#0f3f3a;display:flex;align-items:center;justify-content:center;padding:clamp(16px,3vw,36px)">
+          <img src="assets/viva-juara.png" alt="Viva Juara — lotes em condomínio fechado com condições facilitadas" style="width:100%;max-width:520px;height:auto;display:block;border-radius:4px;box-shadow:0 20px 50px #00000040">
+        </div>
+        <div style="padding:clamp(26px,4vw,52px);display:flex;flex-direction:column;gap:26px">
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#8b7755">
+            <span style="background:#1b3043;color:#faf9f6;padding:5px 9px;border-radius:3px">Lançamento</span><span>Condomínio fechado de lotes · Serra/ES</span>
+          </div>
+          <div>
+            <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(40px,4.8vw,64px);line-height:1;margin:0 0 6px;letter-spacing:-.01em">Viva Juara</h2>
+            <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:24px;color:#8b7755;margin-bottom:16px">A diferença entre morar e viver.</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px">
+              <span style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:#1b3043;color:#faf9f6;border-radius:999px;padding:6px 12px">Vista para o mar</span>
+              <span style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:#1b3043;color:#faf9f6;border-radius:999px;padding:6px 12px">Vista para a Lagoa Juara</span>
+              <span style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:#1b3043;color:#faf9f6;border-radius:999px;padding:6px 12px">Vista para o Mestre Álvaro</span>
+            </div>
+            <p style="font-size:16px;line-height:1.7;color:#3f5263;margin:0;max-width:560px;text-wrap:pretty">Primeiro condomínio fechado de lotes da Lotes CBL com a Soma Urbanismo na Serra, próximo à Lagoa Juara e ao Shopping Montserrat, com vista para o Mestre Álvaro. Área toda murada, com portaria e controle de acesso para moradores e convidados.</p>
+          </div>
+          <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));border-top:2px solid #1b3043">
+            <div style="padding:14px 12px 14px 0;border-bottom:1px solid #e3e1dc"><dt style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#717a80;margin-bottom:4px">Lotes</dt><dd style="margin:0;font-size:22px;font-weight:600">498</dd></div>
+            <div style="padding:14px 12px 14px 0;border-bottom:1px solid #e3e1dc"><dt style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#717a80;margin-bottom:4px">Lotes a partir de</dt><dd style="margin:0;font-size:22px;font-weight:600">250 m²</dd></div>
+            <div style="padding:14px 12px 14px 0;border-bottom:1px solid #e3e1dc"><dt style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#717a80;margin-bottom:4px">Quadras</dt><dd style="margin:0;font-size:22px;font-weight:600">18</dd></div>
+            <div style="padding:14px 12px 14px 0;border-bottom:1px solid #e3e1dc"><dt style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#717a80;margin-bottom:4px">Valores</dt><dd style="margin:0;font-size:18px;font-weight:600;color:#8b7755">Condições facilitadas</dd></div>
+          </dl>
+          <div>
+            <h3 style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b7755;margin:0 0 12px">Lazer de clube</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="font-size:13px;border:1px solid #e3e1dc;border-radius:999px;padding:6px 12px">Piscinas adulto e infantil</span>
+              <span style="font-size:13px;border:1px solid #e3e1dc;border-radius:999px;padding:6px 12px">3 espaços gourmet com churrasqueira</span>
+              <span style="font-size:13px;border:1px solid #e3e1dc;border-radius:999px;padding:6px 12px">Espaço gourmet pub</span>
+              <span style="font-size:13px;border:1px solid #e3e1dc;border-radius:999px;padding:6px 12px">Bar e lounge de eventos</span>
+              <span style="font-size:13px;border:1px solid #e3e1dc;border-radius:999px;padding:6px 12px">Academia</span>
+              <span style="font-size:13px;border:1px solid #e3e1dc;border-radius:999px;padding:6px 12px">Quadra society</span>
+              <span style="font-size:13px;border:1px solid #e3e1dc;border-radius:999px;padding:6px 12px">2 quadras de beach tennis</span>
+              <span style="font-size:13px;border:1px solid #e3e1dc;border-radius:999px;padding:6px 12px">Pista de caminhada</span>
+              <span style="font-size:13px;border:1px solid #e3e1dc;border-radius:999px;padding:6px 12px">Decks sunset e luar</span>
+              <span style="font-size:13px;border:1px solid #e3e1dc;border-radius:999px;padding:6px 12px">4 playgrounds</span>
+              <span style="font-size:13px;border:1px solid #e3e1dc;border-radius:999px;padding:6px 12px">2 espaços pet</span>
+              <span style="font-size:13px;border:1px solid #e3e1dc;border-radius:999px;padding:6px 12px">Área para mercadinho</span>
+            </div>
+          </div>
+          <div style="font-size:14px;color:#647078;line-height:1.6">Acesso pela Talma Rodrigues Ribeiro, ES-010, Eldes Scherrer, BR-101 e Contorno de Jacaraípe.</div>
+          <a href="https://wa.me/5527988287777?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20Viva%20Juara." target="_blank" style="align-self:flex-start;background:#1b3043;color:#faf9f6;padding:14px 24px;border-radius:999px;font-weight:600;font-size:14px" style-hover="background:#2a4459">Quero saber mais sobre o Viva Juara →</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="imoveis" style="padding:clamp(48px,7vw,96px) clamp(20px,4vw,56px)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:36px">
+        <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(38px,4.6vw,64px);line-height:1;margin:0;letter-spacing:-.01em">Imóveis disponíveis</h2>
+
+      </div>
+
+      <div style="background:#faf9f6;border:1px solid #e3e1dc;padding:28px 34px 30px;margin-bottom:36px;display:flex;align-items:flex-end;gap:28px;flex-wrap:wrap;font-family:'Manrope',sans-serif">
+        <div style="display:flex;align-items:center;gap:14px;font-size:15px;padding-bottom:12px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1b3043" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M15 4v4M9 10v4M17 16v4"></path></svg>Filtrar
+        </div>
+        <sc-for list="{{ selects }}" as="sel" hint-placeholder-count="5">
+          <label style="flex:1 1 170px;display:flex;flex-direction:column;gap:12px;min-width:0">
+            <span style="font-size:12px;color:#717a80">{{ sel.label }}</span>
+            <select value="{{ sel.value }}" onChange="{{ sel.change }}" style="font:inherit;font-size:15px;color:#1b3043;appearance:none;-webkit-appearance:none;background:transparent url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%231b3043' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E&quot;) no-repeat right 4px center;border:0;border-bottom:1px solid #d6d3cc;padding:10px 28px 12px 10px;cursor:pointer;border-radius:0">
+              <sc-for list="{{ sel.options }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.l }}</option></sc-for>
+            </select>
+          </label>
+        </sc-for>
+      </div>
+      <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:48px 0;text-align:center;color:#647078;font-size:16px">Nenhum imóvel encontrado com esses filtros. <a href="#" onClick="{{ clearFilters }}" style="color:#8b7755;font-weight:600">Limpar filtros</a></div>
+      </sc-if>
+      <div style="display:grid;gap:28px;grid-template-columns:{{ catalogCols }}">
+        <sc-for list="{{ shown }}" as="p" hint-placeholder-count="3">
+          <article style="background:#fff;border:1px solid #e3e1dc;border-radius:6px;overflow:hidden;display:grid;grid-template-columns:{{ cardCols }}">
+            <div onClick="{{ p.open }}" style="cursor:pointer;display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:3px;min-height:340px;background:#e3e1dc">
+              <img src="{{ p.p1 }}" alt="{{ p.title }}" style="grid-row:1 / 3;width:100%;height:100%;object-fit:cover;display:block">
+              <img src="{{ p.p2 }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
+              <div style="position:relative">
+                <img src="{{ p.p3 }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                <div style="position:absolute;inset:0;background:#1b3043b3;color:#faf9f6;display:grid;place-items:center;font-size:14px;font-weight:600">+{{ p.more }} fotos</div>
+              </div>
+            </div>
+            <div style="padding:clamp(22px,2.6vw,36px);display:flex;flex-direction:column;gap:22px">
+              <div style="display:flex;gap:10px;align-items:center;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#8b7755">
+                <span style="background:#f1ece2;padding:5px 9px;border-radius:3px">{{ p.type }}</span><span>Ref. {{ p.reference }}</span>
+              </div>
+              <div>
+                <h3 onClick="{{ p.open }}" style="cursor:pointer;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(26px,2.4vw,34px);line-height:1.08;margin:0 0 8px;text-wrap:balance">{{ p.title }}</h3>
+                <div style="font-size:14px;color:#647078">{{ p.location }}</div>
+              </div>
+              <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));border-top:1px solid #e3e1dc">
+                <sc-for list="{{ p.specs }}" as="s" hint-placeholder-count="3">
+                  <div style="padding:14px 12px 14px 0;border-bottom:1px solid #e3e1dc">
+                    <dt style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#717a80;margin-bottom:4px">{{ s.label }}</dt>
+                    <dd style="margin:0;font-size:18px;font-weight:600">{{ s.value }}</dd>
+                  </div>
+                </sc-for>
+              </dl>
+              <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+                <div>
+                  <div style="font-size:24px;font-weight:700;letter-spacing:-.01em">{{ p.priceLabel }}</div>
+                  <sc-if value="{{ p.showPpm }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#647078">{{ p.ppm }} / m² de terreno</div></sc-if>
+                </div>
+                <button onClick="{{ p.open }}" style="font:inherit;font-size:14px;font-weight:600;background:#1b3043;color:#faf9f6;border:0;border-radius:999px;padding:13px 22px;cursor:pointer" style-hover="background:#2a4459">Ver ficha completa →</button>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+    <main style="padding:28px clamp(20px,4vw,56px) clamp(48px,7vw,96px)">
+      <a href="#" onClick="{{ goCatalog }}" style="font-size:13px;font-weight:600;color:#8b7755">← Todos os imóveis</a>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin:20px 0 28px">
+        <div style="max-width:780px">
+          <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#8b7755;margin-bottom:12px">{{ d.type }} · {{ d.purpose }} · Ref. {{ d.reference }}</div>
+          <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(40px,5.4vw,76px);line-height:1;margin:0 0 12px;letter-spacing:-.015em;text-wrap:balance">{{ d.title }}</h1>
+          <div style="font-size:16px;color:#647078">{{ d.location }}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:clamp(28px,3vw,40px);font-weight:700;letter-spacing:-.01em">{{ d.priceLabel }}</div>
+          <sc-if value="{{ d.showPpm }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;color:#647078">{{ d.ppm }} / m² de terreno</div></sc-if>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,minmax(150px,26vw));gap:6px;border-radius:6px;overflow:hidden;max-height:620px">
+        <img src="{{ d.g0 }}" alt="{{ d.title }}, foto 1" onClick="{{ d.lb0 }}" style="grid-column:1 / 3;grid-row:1 / 3;width:100%;height:100%;object-fit:cover;cursor:zoom-in;display:block">
+        <img src="{{ d.g1 }}" alt="" onClick="{{ d.lb1 }}" style="width:100%;height:100%;object-fit:cover;cursor:zoom-in;display:block">
+        <img src="{{ d.g2 }}" alt="" onClick="{{ d.lb2 }}" style="width:100%;height:100%;object-fit:cover;cursor:zoom-in;display:block">
+        <img src="{{ d.g3 }}" alt="" onClick="{{ d.lb3 }}" style="width:100%;height:100%;object-fit:cover;cursor:zoom-in;display:block">
+        <div onClick="{{ d.lb4 }}" style="position:relative;cursor:zoom-in">
+          <img src="{{ d.g4 }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+          <div style="position:absolute;inset:0;background:#1b3043b8;color:#faf9f6;display:grid;place-items:center;font-weight:600;font-size:15px">Ver as {{ d.photoTotal }} fotos</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:clamp(32px,5vw,72px);margin-top:clamp(36px,5vw,64px);align-items:start">
+        <div style="display:flex;flex-direction:column;gap:44px;min-width:0">
+          <section>
+            <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;margin:0 0 18px">Ficha técnica</h2>
+            <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-top:2px solid #1b3043">
+              <sc-for list="{{ d.ficha }}" as="r" hint-placeholder-count="6">
+                <div style="display:flex;justify-content:space-between;gap:16px;padding:16px 16px 16px 0;border-bottom:1px solid #e3e1dc">
+                  <dt style="font-size:14px;color:#647078">{{ r.label }}</dt>
+                  <dd style="margin:0;font-size:15px;font-weight:600;text-align:right;color:{{ r.color }}">{{ r.value }}</dd>
+                </div>
+              </sc-for>
+            </dl>
+          </section>
+          <section>
+            <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;margin:0 0 14px">Sobre o imóvel</h2>
+            <p style="font-size:17px;line-height:1.7;color:#3f5263;margin:0;max-width:640px;text-wrap:pretty">{{ d.description }}</p>
+          </section>
+          <sc-if value="{{ d.hasFeatures }}" hint-placeholder-val="{{ false }}">
+            <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px">
+              <div>
+                <h3 style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b7755;margin:0 0 14px">Diferenciais</h3>
+                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column">
+                  <sc-for list="{{ d.features }}" as="ft" hint-placeholder-count="6"><li style="padding:10px 0;border-bottom:1px solid #e3e1dc;font-size:15px;display:flex;gap:10px;align-items:center"><span style="width:6px;height:6px;background:#baa075;border-radius:50%"></span>{{ ft }}</li></sc-for>
+                </ul>
+              </div>
+              <div>
+                <h3 style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b7755;margin:0 0 14px">Condomínio</h3>
+                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column">
+                  <sc-for list="{{ d.condo }}" as="c" hint-placeholder-count="6"><li style="padding:10px 0;border-bottom:1px solid #e3e1dc;font-size:15px;display:flex;gap:10px;align-items:center"><span style="width:6px;height:6px;background:#baa075;border-radius:50%"></span>{{ c }}</li></sc-for>
+                </ul>
+              </div>
+            </section>
+          </sc-if>
+          <section>
+            <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;margin:0 0 18px">Todas as fotos</h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px">
+              <sc-for list="{{ d.photos }}" as="ph" hint-placeholder-count="8">
+                <img src="{{ ph.src }}" alt="Foto {{ ph.n }}" onClick="{{ ph.open }}" style="width:100%;aspect-ratio:4 / 3;object-fit:cover;border-radius:3px;cursor:zoom-in;display:block">
+              </sc-for>
+            </div>
+          </section>
+        </div>
+
+        <aside style="position:sticky;top:100px;background:#1b3043;color:#faf9f6;border-radius:6px;padding:32px;display:flex;flex-direction:column;gap:20px">
+          <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#baa075;font-weight:600">Ref. {{ d.reference }}</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:32px;line-height:1.1">Agende uma visita ou peça mais informações.</div>
+          <a href="{{ d.wa }}" target="_blank" style="background:#baa075;color:#1b3043;text-align:center;padding:16px;border-radius:999px;font-weight:700;font-size:15px">Falar no WhatsApp</a>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:#d5dbe0;border-top:1px solid #34495b;padding-top:18px">
+            <a href="tel:+5527988287777" style="color:#faf9f6">(27) 98828-7777</a>
+            <a href="tel:+5527988321999" style="color:#faf9f6">(27) 98832-1999</a>
+            <a href="mailto:abraosoares@gmail.com" style="color:#faf9f6">abraosoares@gmail.com</a>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </sc-if>
+
+  <footer id="contato" style="margin-top:auto;background:#14242f;color:#d5dbe0;padding:56px clamp(20px,4vw,56px) 28px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:36px;padding-bottom:36px;border-bottom:1px solid #2b3d4b">
+      <div>
+        <div style="font-family:'Instrument Serif',serif;font-size:30px;color:#faf9f6;line-height:1.1">Abrão Soares</div>
+        <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#baa075;margin-top:6px">Corretores de Imóveis</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:14px">
+        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8d9aa5;margin-bottom:6px">Contato</div>
+        <a href="https://wa.me/5527988287777" target="_blank" style="color:#faf9f6">(27) 98828-7777</a>
+        <a href="tel:+5527988321999" style="color:#faf9f6">(27) 98832-1999</a>
+        <a href="mailto:abraosoares@gmail.com" style="color:#faf9f6">abraosoares@gmail.com</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:14px">
+        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8d9aa5;margin-bottom:6px">Endereço</div>
+        <div style="line-height:1.6">Avenida Talma Rodrigues Ribeiro, 3212, Boulevard Lagoa — Serra/ES, 29167-920</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:14px">
+        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8d9aa5;margin-bottom:6px">Redes</div>
+        <a href="https://www.instagram.com/abraosoarescorretores" target="_blank" style="color:#faf9f6">Instagram</a>
+        <a href="https://www.youtube.com/@abraosoarescorretoresdeimo8921" target="_blank" style="color:#faf9f6">YouTube</a>
+      </div>
+    </div>
+    <div style="font-size:12px;color:#8d9aa5;padding-top:20px">© 2026 Abrão Soares Corretores de Imóveis</div>
+  </footer>
+
+  <button onClick="{{ toggleMusic }}" aria-label="Música de fundo" style="position:fixed;left:20px;bottom:20px;z-index:90;font-family:'Manrope',sans-serif;font-size:13px;display:flex;align-items:center;gap:10px;background:#faf9f6;color:#1b3043;border:1px solid #c4b18d;border-radius:999px;padding:10px 16px;cursor:pointer;box-shadow:0 6px 20px #1b30431a" style-hover="background:#eee8dc">
+    <span style="width:8px;height:8px;border-radius:50%;background:{{ musicDot }}"></span>{{ musicLabel }}
+  </button>
+
+  <sc-if value="{{ lbOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ lbClose }}" style="position:fixed;inset:0;z-index:100;background:#0d1a24f2;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 16px 24px">
+      <div style="position:absolute;top:16px;left:20px;right:20px;display:flex;justify-content:space-between;color:#faf9f6;font-size:14px">
+        <span>{{ lbCounter }}</span>
+        <button onClick="{{ lbClose }}" style="font:inherit;background:transparent;color:#faf9f6;border:1px solid #faf9f655;border-radius:999px;padding:6px 16px;cursor:pointer">Fechar ✕</button>
+      </div>
+      <img src="{{ lbSrc }}" alt="" onClick="{{ stop }}" style="max-width:100%;max-height:calc(100vh - 140px);object-fit:contain;border-radius:3px">
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <button onClick="{{ lbPrev }}" style="font:inherit;background:#faf9f6;color:#1b3043;border:0;border-radius:999px;width:52px;height:52px;font-size:20px;cursor:pointer">←</button>
+        <button onClick="{{ lbNext }}" style="font:inherit;background:#faf9f6;color:#1b3043;border:0;border-radius:999px;width:52px;height:52px;font-size:20px;cursor:pointer">→</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Lista&quot;,&quot;Grade&quot;],&quot;default&quot;:&quot;Lista&quot;,&quot;tsType&quot;:&quot;'Lista'|'Grade'&quot;},&quot;showPricePerM2&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;musicVolume&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:5,&quot;max&quot;:80,&quot;step&quot;:5,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;}}">
+const B = 'https://imagens.tecimob.com.br/media/b8fd0fa4-f9e8-4ccd-a6c5-7f0c967d46c5';
+const P = id => `${B}/properties/${id}/images/`;
+const h = P('6511445c-5de1-4de4-a7a0-9f959474cae2'), a = P('2e1a3ca5-dc5c-4bda-9b4a-9edefc8255c7'), b = P('ec3432c8-0831-45f7-aa82-d3e0151b83b7'), c = P('169e6533-8f66-4aaf-83bd-d49ff80f7b15'), t = P('c18bc70b-adc6-4343-8e3d-cb16377ccdfe');
+const cond = `${B}/condos/6c7bc00e-d161-4d08-b9fd-fbaf6fe6172f/images/`;
+const g160 = ['ac4d4e37-e3d5-49be-b3b7-7e301add66491781892803O3gk','fb068e6e-f6c8-453b-a3dc-18b3fdc5804f178189280370jh','ab5dd11c-0e75-4165-8e70-b2ce0acbda021781892803Q6oQ','2d4eed3e-7efc-4ba3-a89b-8907aaa9afe017818928038xsh','5561b420-9cec-41bb-a51d-c5e4cf09593f17818928033CVH','54add52d-a824-4222-ad4d-7ed2f0640ef51781892808ZLE9','63fcd0c2-0ff2-42eb-9793-8b773f4949551781892808EcIm','2a1b06e2-c54d-40df-9cdc-e282459964171781892808vwlQ'].map(x => h + x + '.jpg').concat(['60b1ebbb-a348-49fa-acdd-3d8dba2919e91756140708ksKu','52e39364-421d-4455-87e5-0613dce8bce91756140707uK0K'].map(x => cond + x + '.jpg'));
+const g175 = ['2869b23c-911a-424f-8479-3f41562d0d181787256067zfWU','8ced830b-cc14-4efa-9638-276748c0bcab1787256055CwgC','93ac5f22-9acb-4922-ad36-fb5e9a1895181787256055z2YN','0106d773-0d13-4a3d-b13e-3b0b0cbb863d1787256067wm8t','0cd3602c-eb78-46be-a33b-2cf2606d55231787256061uLJ6','40de8827-cadb-4727-bd36-fbf23a7144e11787256058ebKn','416eb6b1-a879-4140-9e7d-bbbb8a7d03ac1787256065pjxJ','534622af-87a3-49ab-bb5f-c312444f3dc01787256062fE0T','560d00fa-cb4c-4684-8e73-67a83f74f4341787256058UUcT','718db71b-2dd4-4f9a-b2bf-b13dddd028671787256055c2DZ','a26f8adf-1a43-478d-8a1e-2287429c7cb317872560642MNa','a4c6c4db-a95f-4a91-8fa9-6d3e844bdc411787256061WCLt','aa9ccaa4-86ef-4d43-af1c-3709b266d42b1787256058xn66','c3e53141-92d7-409c-8230-d0f229e868a71787256065A6Xt','d400bf1f-4f6f-452f-b910-3ad644eabcb51787256058v5Pi','d90395b3-9eef-47b3-9849-355d363a79981787256055Qpvu','e89f0a2a-2b06-4d06-b0a5-28d5168dbc871787256058MKxk','f4e6f2f5-b804-4737-a88e-2ecb41cd1b751787256055j3Yw','fc5991f2-dd3d-4454-a43d-bc8a13aae03e1787256064yB4o'].map(x => a + x + '.jpg');
+const g176 = ['45540d0c-89fd-4a61-baef-4107aae96c1a1787598056cmTa','b4533058-454a-4ebb-a089-a82bdc3dd6da1787598057I0M1','87eab8f2-7972-4397-8a07-5c51cd19bd671787598053Lipo','4b994b53-7109-48a5-b63b-049137112e0a1787598052tJ08','f67c72bd-f328-4176-8847-5cf8f9d182cf1787598052cidF','7efa93c8-0ffb-4aeb-bd6c-1fa5812c9f3e1787598060ifBc','7ec05897-178c-4505-9373-eeb7d025e97a17875980633IAi','99c3cc80-7f4d-4574-ac79-ca11696e2a971787598060wP0l','ad62d74a-7072-479a-94ef-bcfd7abd20c61787598053C6lJ','b88cd36e-a6d2-4e62-abbe-e7e0da45ee5f1787598056XAn4','b9e8b850-8ca9-483c-8fe9-e2caca840faa1787598060kIIU','dd84cc6d-13c6-40aa-bc52-74f64a016d8f1787598056i5Bs'].map(x => b + x + '.jpg');
+const g171 = ['20753e8f-cd07-47ba-ba11-9a27c8ec49d61787322253qxhy','7550e256-1f71-43ff-8381-68140e60b9031787322254pPW2','9903ecd5-aba3-4519-b33b-44d5747e6ee41787322253BXz9','04683659-efc5-45b7-bba3-8c28b6c1fb0e1787322253YUc3','4c2abafc-8847-42bb-98f6-dc83ea8c1f4f17873222517TP2','5a38a631-d89f-4468-8fad-e419496ae63d1787322251cPDh','619a056e-d550-4c69-b87d-b39e21fc730b1787322253wDRN','84be53f1-bc20-4b56-a75f-0de01ab84f191787322251US5X','8c949911-4fbb-4520-b4c1-aa4307789a741787322254hQhu','9d8f56b4-c259-4d2c-827d-a05adf71d13f1787322253jHnS','c6efe96c-a356-44e4-90c4-0438079b2ba817873222547OTB','d1fb5df2-29e8-485d-a0a6-35fa17ff1efd1787322251bFiI','e4ffb2df-47ee-4055-98b8-25bba2ee8def17873222545Qos'].map(x => c + x + '.jpg');
+const g112 = ['6860d6b5-3bee-4955-a178-7c014b448f671759091832CfCI','dc566be1-edcf-40ea-a922-ba93f1977be91759091831wTRL','b83887bc-4f99-40c5-bb38-e7b1ec6a46b91759091830jy7l','0da8653a-4709-4b99-b3c7-84a4bc8ed4711759091835fW1z','14dd9aef-7f55-4caa-97ea-d8b4921d221e17590918437O4p','2b4f2e73-19bf-4a1a-934c-67be02ebe67a1759091833NKX3','64052831-2b79-4ae3-a05d-7b55ddbc91d41759091842POgX','6b9c21d6-e6e2-496e-bf3e-12037db28ba01759091841tAci','78688dc6-880d-4d3d-8ffc-88c7fd0b72c117590918339iSb','7ab2d01c-7b60-4213-a792-a91f299b80ef1759091834YYCK','7f920f0d-5787-4411-a136-6bb3b8f55cb01759091837Aqh3','9028f841-9a06-48ee-b10c-25346c6c6b6d1759091838CpIA','9bcda200-ea94-4340-99a6-686579980f5c1759091836sjTd','aea87ca0-f520-4e81-961a-5f86bbaf9a171759091831R9aW','c29cf9af-7766-4a74-9da1-aec629fa5c841759091839Gk6p','c969d4f8-fcf0-4d8d-b406-892bc3913c4c1759091837aI8L','cf58bee0-98b4-40df-a521-2a6318c5e39f1759091843I9Kx','de7b9ecf-7336-4dfb-8add-9877926014301759091841Y2c8','f87cd097-a0a1-44aa-8d62-d62792f4eac11759091840SSD9'].map(x => t + x + '.jpg');
+
+const GENERIC = 'Imóvel anunciado pela Abrão Soares. Condições e disponibilidade sob consulta.';
+const LISTINGS = [
+  { reference: '160', title: 'Casa térrea no Boulevard Lagoa', location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 3, land: 456, parking: 4, images: g160,
+    description: 'Casa térrea pronta para morar, com living integrado, 3 suítes (2 canadenses), closet e escritório reversível. Piscina, churrasqueira e quintal gramado.',
+    features: ['3 suítes, 2 canadenses', 'Escritório reversível', 'Closet', 'Living integrado', 'Piscina', 'Churrasqueira', 'Quintal gramado', '4 vagas cobertas'],
+    condo: ['Lazer', 'SPA', 'Restaurante', 'Quadras', 'Trilha ecológica', 'Portaria 24h', 'Ronda motorizada'] },
+  { reference: '175', title: 'Casa alto padrão no Boulevard Lagoa', location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 3, land: 345, parking: 4, price: 3100000, images: g175 },
+  { reference: '176', title: 'Casa alto padrão Boulevard Lagoa', location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 1, land: 300, parking: 4, price: 2690000, images: g176 },
+  { reference: '171', title: 'Apartamento no Barro Vermelho', location: 'Barro Vermelho · Vitória/ES', type: 'Apartamento', rooms: 4, land: 0, parking: 4, price: 8900000, images: g171 },
+  { reference: '112', title: 'Terreno na Fazenda Barão do Império', location: 'Barra do Mangaraí · Santa Leopoldina/ES', type: 'Terreno', rooms: 0, land: 1050, parking: 0, price: 661720, images: g112 },
+];
+const brl = n => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+const m2 = n => n.toLocaleString('pt-BR') + ' m²';
+const TBC = 'A confirmar';
+
+class Component extends DCLogic {
+  state = { view: 'home', ref: null, f: { purpose: '', city: '', type: '', rooms: '', max: '' }, lb: null, menu: false };
+  componentDidMount() {
+    this.onKey = e => {
+      if (e.key === 'Escape' && this.state.menu) this.setState({ menu: false });
+      if (this.state.lb == null) return;
+      if (e.key === 'Escape') this.setState({ lb: null });
+      if (e.key === 'ArrowRight') this.step(1);
+      if (e.key === 'ArrowLeft') this.step(-1);
+    };
+    window.addEventListener('keydown', this.onKey);
+    this.firstTouch = e => {
+      window.removeEventListener('pointerdown', this.firstTouch, true);
+      if (e.target.closest && e.target.closest('[aria-label="Música de fundo"]')) return;
+      if (!this.userOff) this.startMusic();
+    };
+    window.addEventListener('pointerdown', this.firstTouch, true);
+  }
+  componentWillUnmount() { window.removeEventListener('keydown', this.onKey); window.removeEventListener('pointerdown', this.firstTouch, true); this.stopMusic(); }
+  startMusic() {
+    if (this.timer) return;
+    const ctx = this.ctx || (this.ctx = new (window.AudioContext || window.webkitAudioContext)());
+    ctx.resume();
+    const vol = (this.props.musicVolume ?? 50) / 400;
+    const master = ctx.createGain(); master.gain.setValueAtTime(0, ctx.currentTime);
+    master.gain.linearRampToValueAtTime(vol, ctx.currentTime + 2.5);
+    const comp = ctx.createDynamicsCompressor(); master.connect(comp); comp.connect(ctx.destination);
+    const delay = ctx.createDelay(); delay.delayTime.value = 0.536; const fb = ctx.createGain(); fb.gain.value = 0.38;
+    const wet = ctx.createGain(); wet.gain.value = 0.35; const dlp = ctx.createBiquadFilter(); dlp.type = 'lowpass'; dlp.frequency.value = 2200;
+    delay.connect(dlp); dlp.connect(fb); fb.connect(delay); dlp.connect(wet); wet.connect(master);
+    this.master = master;
+    const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+    const note = (m, t, len, type, peak, att, cut, send) => {
+      const o = ctx.createOscillator(), g = ctx.createGain(), f = ctx.createBiquadFilter();
+      o.type = type; o.frequency.value = hz(m); f.type = 'lowpass'; f.frequency.value = cut;
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + att); g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+      o.connect(f); f.connect(g); g.connect(master); if (send) g.connect(delay);
+      o.start(t); o.stop(t + len + 0.05);
+    };
+    // D maior, clima de litoral: Dmaj9 – Bm9 – Gmaj7(#11) – A6sus
+    const prog = [
+      { bass: 38, pad: [62, 66, 69, 73, 76], arp: [74, 78, 81, 85, 81, 78] },
+      { bass: 35, pad: [62, 66, 69, 73], arp: [74, 78, 81, 83, 81, 78] },
+      { bass: 31, pad: [59, 62, 66, 71, 73], arp: [71, 74, 78, 79, 78, 74] },
+      { bass: 33, pad: [61, 64, 66, 69, 71], arp: [73, 76, 78, 81, 78, 76] },
+    ];
+    const beat = 60 / 84, bar = beat * 4; let i = 0;
+    const play = () => {
+      const t0 = ctx.currentTime + 0.05, c = prog[i++ % prog.length];
+      c.pad.forEach(m => { note(m, t0, bar + 1.2, 'sawtooth', 0.035, 0.9, 900, true); note(m + 0.07, t0, bar + 1.2, 'triangle', 0.05, 0.9, 1500, false); });
+      note(c.bass, t0, beat * 2.6, 'sine', 0.32, 0.03, 400, false);
+      note(c.bass, t0 + beat * 2.5, beat * 1.6, 'sine', 0.22, 0.03, 400, false);
+      for (let k = 0; k < 8; k++) {
+        if (k === 3 || (k === 7 && i % 2)) continue;
+        note(c.arp[k % c.arp.length], t0 + k * beat / 2, 0.9, 'triangle', 0.09, 0.01, 3200, true);
+      }
+      if (i % 2 === 0) note(c.arp[2] + 12, t0 + beat * 3, 1.6, 'sine', 0.05, 0.02, 4000, true);
+    };
+    play(); this.timer = setInterval(play, bar * 1000);
+    this.setState({ music: true });
+  }
+  stopMusic() {
+    clearInterval(this.timer); this.timer = null;
+    if (this.master && this.ctx) { const m = this.master; m.gain.cancelScheduledValues(this.ctx.currentTime); m.gain.setValueAtTime(m.gain.value, this.ctx.currentTime); m.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 1); setTimeout(() => m.disconnect(), 1200); }
+    if (this.state.music) this.setState({ music: false });
+  }
+  current() { return LISTINGS.find(p => p.reference === this.state.ref) || LISTINGS[0]; }
+  step(d) { const n = this.current().images.length; this.setState(s => ({ lb: (s.lb + d + n) % n })); }
+  open(ref) { this.setState({ view: 'detail', ref, lb: null }); window.scrollTo(0, 0); }
+  specsFor(p) {
+    const s = [];
+    if (p.land) s.push({ label: 'Terreno', value: m2(p.land) });
+    if (p.rooms) s.push({ label: 'Suítes', value: String(p.rooms) });
+    if (p.parking) s.push({ label: 'Vagas', value: String(p.parking) });
+    if (p.type === 'Terreno') s.push({ label: 'Tipo', value: 'Lote' });
+    if (p.type === 'Apartamento') s.push({ label: 'Área útil', value: TBC });
+    return s;
+  }
+  fichaFor(p) {
+    const isLot = p.type === 'Terreno';
+    const rows = [
+      ['Referência', p.reference], ['Tipo', isLot ? 'Terreno / lote' : p.type], ['Finalidade', 'Venda'],
+      ['Área do terreno', p.land ? m2(p.land) : (p.type === 'Apartamento' ? '—' : TBC)],
+    ];
+    if (isLot) rows.push(['Frente × fundo', TBC], ['Topografia', TBC]);
+    else rows.push(['Área construída', TBC], ['Suítes', p.rooms ? String(p.rooms) : TBC], ['Vagas de garagem', p.parking ? String(p.parking) : TBC]);
+    rows.push(['Valor', p.price ? brl(p.price) : 'Sob consulta']);
+    if (p.price && p.land) rows.push(['Valor por m² de terreno', brl(Math.round(p.price / p.land))]);
+    rows.push(['Condomínio', TBC], ['IPTU', TBC], ['Localização', p.location]);
+    return rows.map(([label, value]) => ({ label, value, color: value === TBC ? '#8b7755' : '#1b3043' }));
+  }
+  renderVals() {
+    const showPpm = this.props.showPricePerM2 ?? true;
+    const grid = (this.props.layout ?? 'Lista') === 'Grade';
+    const f = this.state.f;
+    const setF = k => e => { const v = e.target.value; this.setState(s => ({ f: { ...s.f, [k]: v } })); };
+    const cities = [...new Set(LISTINGS.map(p => p.location.split(' · ')[1]))];
+    const opt = (pairs) => [{ v: '', l: 'Todos' }].concat(pairs.map(([v, l]) => ({ v, l })));
+    const selects = [
+      { label: 'Finalidade', key: 'purpose', options: opt([['Venda', 'Venda']]) },
+      { label: 'Localização', key: 'city', options: opt(cities.map(c => [c, c])) },
+      { label: 'Tipo', key: 'type', options: opt([['Casa', 'Casa'], ['Apartamento', 'Apartamento'], ['Terreno', 'Terreno']]) },
+      { label: 'Quartos', key: 'rooms', options: opt([['1', '1+'], ['2', '2+'], ['3', '3+'], ['4', '4+']]) },
+      { label: 'Preço máximo', key: 'max', options: opt([['1000000', 'Até R$ 1 milhão'], ['3000000', 'Até R$ 3 milhões'], ['5000000', 'Até R$ 5 milhões'], ['10000000', 'Até R$ 10 milhões']]) },
+    ].map(x => ({ ...x, value: f[x.key], change: setF(x.key) }));
+    const match = p => (!f.city || p.location.endsWith(f.city)) && (!f.type || p.type === f.type) && (!f.rooms || p.rooms >= +f.rooms) && (!f.max || (p.price && p.price <= +f.max));
+    const card = p => ({ ...p, p1: p.images[0], p2: p.images[1], p3: p.images[2], more: p.images.length - 3,
+      specs: this.specsFor(p), priceLabel: p.price ? brl(p.price) : 'Valor sob consulta',
+      showPpm: showPpm && !!(p.price && p.land), ppm: p.price && p.land ? brl(Math.round(p.price / p.land)) : '',
+      open: e => { e && e.preventDefault && e.preventDefault(); this.open(p.reference); } });
+    const shown = LISTINGS.filter(match).map(card);
+    const cur = this.current();
+    const d = card(cur);
+    cur.images.slice(0, 5).forEach((src, i) => { d['g' + i] = src; d['lb' + i] = () => this.setState({ lb: i }); });
+    Object.assign(d, {
+      purpose: 'Venda', photoTotal: cur.images.length, ficha: this.fichaFor(cur),
+      description: cur.description || GENERIC, hasFeatures: !!cur.features, features: cur.features || [], condo: cur.condo || [],
+      photos: cur.images.map((src, i) => ({ src, n: i + 1, open: () => this.setState({ lb: i }) })),
+      wa: 'https://wa.me/5527988287777?text=' + encodeURIComponent(`Olá! Quero saber mais sobre o imóvel ref. ${cur.reference}.`),
+    });
+    const lb = this.state.lb;
+    return {
+      isHome: this.state.view === 'home', isDetail: this.state.view === 'detail',
+      count: LISTINGS.length, photoCount: LISTINGS.reduce((s, p) => s + p.images.length, 0),
+      musicLabel: this.state.music ? 'Música ligada' : 'Música desligada',
+      musicDot: this.state.music ? '#baa075' : '#c9cdd1',
+      toggleMusic: () => { if (this.state.music) { this.userOff = true; this.stopMusic(); } else { this.userOff = false; this.startMusic(); } },
+      videoRef: el => { if (el) { el.muted = true; el.loop = true; el.playsInline = true; if (el.paused) el.play().catch(() => {}); } },
+      selects, shown, d, noResults: shown.length === 0,
+      clearFilters: e => { e.preventDefault(); this.setState({ f: { purpose: '', city: '', type: '', rooms: '', max: '' } }); },
+      navHome: this.state.view === 'home' ? '#947c51' : '#1b3043', navHomeLine: this.state.view === 'home' ? 1 : 0,
+      navImoveis: this.state.view === 'detail' ? '#947c51' : '#1b3043', navImoveisLine: this.state.view === 'detail' ? 1 : 0,
+      catalogCols: grid ? 'repeat(auto-fill,minmax(min(100%,420px),1fr))' : '1fr',
+      cardCols: grid ? '1fr' : 'repeat(auto-fit,minmax(min(100%,440px),1fr))',
+      goHome: e => { e.preventDefault(); this.setState({ view: 'home', lb: null, menu: false }); window.scrollTo(0, 0); },
+      goCatalog: e => { e.preventDefault(); this.setState({ view: 'home', lb: null, menu: false }, () => { const el = document.getElementById('imoveis'); if (el) window.scrollTo(0, el.offsetTop - 80); }); },
+      openFeatured: e => { e.preventDefault(); this.open('175'); },
+      lbOpen: lb != null, lbSrc: lb != null ? cur.images[lb] : '', lbCounter: lb != null ? `${lb + 1} / ${cur.images.length}` : '',
+      lbClose: () => this.setState({ lb: null }),
+      lbPrev: e => { e.stopPropagation(); this.step(-1); }, lbNext: e => { e.stopPropagation(); this.step(1); },
+      stop: e => e.stopPropagation(),
+      menuOpen: !!this.state.menu, menuClosed: !this.state.menu,
+      menuLabel: this.state.menu ? 'Fechar menu' : 'Abrir menu', menuExpanded: this.state.menu ? 'true' : 'false',
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu })),
+      closeMenu: () => { if (this.state.menu) this.setState({ menu: false }); },
+    };
+  }
+}
+</script>
+</body>
+</html>
