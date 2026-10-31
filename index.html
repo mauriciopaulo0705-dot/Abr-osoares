@@ -401,10 +401,6 @@ a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
     <div style="font-size:12px;color:#8d9aa5;padding-top:20px">© 2026 Abrão Soares Corretores de Imóveis</div>
   </footer>
 
-  <button onClick="{{ toggleMusic }}" aria-label="Música de fundo" style="position:fixed;left:20px;bottom:20px;z-index:90;font-family:'Manrope',sans-serif;font-size:13px;display:flex;align-items:center;gap:10px;background:#faf9f6;color:#1b3043;border:1px solid #c4b18d;border-radius:999px;padding:10px 16px;cursor:pointer;box-shadow:0 6px 20px #1b30431a" style-hover="background:#eee8dc">
-    <span style="width:8px;height:8px;border-radius:50%;background:{{ musicDot }}"></span>{{ musicLabel }}
-  </button>
-
   <sc-if value="{{ lbOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ lbClose }}" style="position:fixed;inset:0;z-index:100;background:#0d1a24f2;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 16px 24px">
       <div style="position:absolute;top:16px;left:20px;right:20px;display:flex;justify-content:space-between;color:#faf9f6;font-size:14px">
@@ -420,7 +416,7 @@ a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
   </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Lista&quot;,&quot;Grade&quot;],&quot;default&quot;:&quot;Lista&quot;,&quot;tsType&quot;:&quot;'Lista'|'Grade'&quot;},&quot;showPricePerM2&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;musicVolume&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:5,&quot;max&quot;:80,&quot;step&quot;:5,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Lista&quot;,&quot;Grade&quot;],&quot;default&quot;:&quot;Lista&quot;,&quot;tsType&quot;:&quot;'Lista'|'Grade'&quot;},&quot;showPricePerM2&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 const B = 'https://imagens.tecimob.com.br/media/b8fd0fa4-f9e8-4ccd-a6c5-7f0c967d46c5';
 const P = id => `${B}/properties/${id}/images/`;
 const h = P('6511445c-5de1-4de4-a7a0-9f959474cae2'), a = P('2e1a3ca5-dc5c-4bda-9b4a-9edefc8255c7'), b = P('ec3432c8-0831-45f7-aa82-d3e0151b83b7'), c = P('169e6533-8f66-4aaf-83bd-d49ff80f7b15'), t = P('c18bc70b-adc6-4343-8e3d-cb16377ccdfe');
@@ -457,61 +453,8 @@ class Component extends DCLogic {
       if (e.key === 'ArrowLeft') this.step(-1);
     };
     window.addEventListener('keydown', this.onKey);
-    this.firstTouch = e => {
-      window.removeEventListener('pointerdown', this.firstTouch, true);
-      if (e.target.closest && e.target.closest('[aria-label="Música de fundo"]')) return;
-      if (!this.userOff) this.startMusic();
-    };
-    window.addEventListener('pointerdown', this.firstTouch, true);
   }
-  componentWillUnmount() { window.removeEventListener('keydown', this.onKey); window.removeEventListener('pointerdown', this.firstTouch, true); this.stopMusic(); }
-  startMusic() {
-    if (this.timer) return;
-    const ctx = this.ctx || (this.ctx = new (window.AudioContext || window.webkitAudioContext)());
-    ctx.resume();
-    const vol = (this.props.musicVolume ?? 50) / 400;
-    const master = ctx.createGain(); master.gain.setValueAtTime(0, ctx.currentTime);
-    master.gain.linearRampToValueAtTime(vol, ctx.currentTime + 2.5);
-    const comp = ctx.createDynamicsCompressor(); master.connect(comp); comp.connect(ctx.destination);
-    const delay = ctx.createDelay(); delay.delayTime.value = 0.536; const fb = ctx.createGain(); fb.gain.value = 0.38;
-    const wet = ctx.createGain(); wet.gain.value = 0.35; const dlp = ctx.createBiquadFilter(); dlp.type = 'lowpass'; dlp.frequency.value = 2200;
-    delay.connect(dlp); dlp.connect(fb); fb.connect(delay); dlp.connect(wet); wet.connect(master);
-    this.master = master;
-    const hz = m => 440 * Math.pow(2, (m - 69) / 12);
-    const note = (m, t, len, type, peak, att, cut, send) => {
-      const o = ctx.createOscillator(), g = ctx.createGain(), f = ctx.createBiquadFilter();
-      o.type = type; o.frequency.value = hz(m); f.type = 'lowpass'; f.frequency.value = cut;
-      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + att); g.gain.exponentialRampToValueAtTime(0.0001, t + len);
-      o.connect(f); f.connect(g); g.connect(master); if (send) g.connect(delay);
-      o.start(t); o.stop(t + len + 0.05);
-    };
-    // D maior, clima de litoral: Dmaj9 – Bm9 – Gmaj7(#11) – A6sus
-    const prog = [
-      { bass: 38, pad: [62, 66, 69, 73, 76], arp: [74, 78, 81, 85, 81, 78] },
-      { bass: 35, pad: [62, 66, 69, 73], arp: [74, 78, 81, 83, 81, 78] },
-      { bass: 31, pad: [59, 62, 66, 71, 73], arp: [71, 74, 78, 79, 78, 74] },
-      { bass: 33, pad: [61, 64, 66, 69, 71], arp: [73, 76, 78, 81, 78, 76] },
-    ];
-    const beat = 60 / 84, bar = beat * 4; let i = 0;
-    const play = () => {
-      const t0 = ctx.currentTime + 0.05, c = prog[i++ % prog.length];
-      c.pad.forEach(m => { note(m, t0, bar + 1.2, 'sawtooth', 0.035, 0.9, 900, true); note(m + 0.07, t0, bar + 1.2, 'triangle', 0.05, 0.9, 1500, false); });
-      note(c.bass, t0, beat * 2.6, 'sine', 0.32, 0.03, 400, false);
-      note(c.bass, t0 + beat * 2.5, beat * 1.6, 'sine', 0.22, 0.03, 400, false);
-      for (let k = 0; k < 8; k++) {
-        if (k === 3 || (k === 7 && i % 2)) continue;
-        note(c.arp[k % c.arp.length], t0 + k * beat / 2, 0.9, 'triangle', 0.09, 0.01, 3200, true);
-      }
-      if (i % 2 === 0) note(c.arp[2] + 12, t0 + beat * 3, 1.6, 'sine', 0.05, 0.02, 4000, true);
-    };
-    play(); this.timer = setInterval(play, bar * 1000);
-    this.setState({ music: true });
-  }
-  stopMusic() {
-    clearInterval(this.timer); this.timer = null;
-    if (this.master && this.ctx) { const m = this.master; m.gain.cancelScheduledValues(this.ctx.currentTime); m.gain.setValueAtTime(m.gain.value, this.ctx.currentTime); m.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 1); setTimeout(() => m.disconnect(), 1200); }
-    if (this.state.music) this.setState({ music: false });
-  }
+  componentWillUnmount() { window.removeEventListener('keydown', this.onKey); }
   current() { return LISTINGS.find(p => p.reference === this.state.ref) || LISTINGS[0]; }
   step(d) { const n = this.current().images.length; this.setState(s => ({ lb: (s.lb + d + n) % n })); }
   open(ref) { this.setState({ view: 'detail', ref, lb: null }); window.scrollTo(0, 0); }
@@ -570,9 +513,6 @@ class Component extends DCLogic {
     return {
       isHome: this.state.view === 'home', isDetail: this.state.view === 'detail',
       count: LISTINGS.length, photoCount: LISTINGS.reduce((s, p) => s + p.images.length, 0),
-      musicLabel: this.state.music ? 'Música ligada' : 'Música desligada',
-      musicDot: this.state.music ? '#baa075' : '#c9cdd1',
-      toggleMusic: () => { if (this.state.music) { this.userOff = true; this.stopMusic(); } else { this.userOff = false; this.startMusic(); } },
       videoRef: el => { if (el) { el.muted = true; el.loop = true; el.playsInline = true; if (el.paused) el.play().catch(() => {}); } },
       selects, shown, d, noResults: shown.length === 0,
       clearFilters: e => { e.preventDefault(); this.setState({ f: { purpose: '', city: '', type: '', rooms: '', max: '' } }); },
