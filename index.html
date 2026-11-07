@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Abrão Soares Corretores de Imóveis</title>
-<meta name="description" content="Imóveis especiais em Serra, Vitória e Aracruz/ES. Casas, apartamentos e terrenos selecionados pela Abrão Soares Corretores de Imóveis.">
+<meta name="description" content="Imóveis especiais em Serra, Vitória e Aracruz/ES. Casas, apartamentos, terrenos e salas comerciais selecionados pela Abrão Soares Corretores de Imóveis.">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -231,7 +231,7 @@ a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
               <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
                 <div>
                   <div style="font-size:24px;font-weight:700;letter-spacing:-.01em">{{ p.priceLabel }}</div>
-                  <sc-if value="{{ p.showPpm }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#647078">{{ p.ppm }} / m² de terreno</div></sc-if>
+                  <sc-if value="{{ p.showPpm }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#647078">{{ p.ppm }} / {{ p.ppmUnit }}</div></sc-if>
                 </div>
                 <button onClick="{{ p.open }}" style="font:inherit;font-size:14px;font-weight:600;background:#1b3043;color:#faf9f6;border:0;border-radius:999px;padding:13px 22px;cursor:pointer" style-hover="background:#2a4459">Ver ficha completa →</button>
               </div>
@@ -253,7 +253,7 @@ a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
         </div>
         <div style="text-align:right">
           <div style="font-size:clamp(28px,3vw,40px);font-weight:700;letter-spacing:-.01em">{{ d.priceLabel }}</div>
-          <sc-if value="{{ d.showPpm }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;color:#647078">{{ d.ppm }} / m² de terreno</div></sc-if>
+          <sc-if value="{{ d.showPpm }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;color:#647078">{{ d.ppm }} / {{ d.ppmUnit }}</div></sc-if>
         </div>
       </div>
 
@@ -294,7 +294,7 @@ a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
                 </ul>
               </div>
               <div>
-                <h3 style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b7755;margin:0 0 14px">Condomínio</h3>
+                <h3 style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b7755;margin:0 0 14px">{{ d.condoTitle }}</h3>
                 <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column">
                   <sc-for list="{{ d.condo }}" as="c" hint-placeholder-count="6"><li style="padding:10px 0;border-bottom:1px solid #e3e1dc;font-size:15px;display:flex;gap:10px;align-items:center"><span style="width:6px;height:6px;background:#baa075;border-radius:50%"></span>{{ c }}</li></sc-for>
                 </ul>
@@ -376,8 +376,15 @@ const g176 = ['45540d0c-89fd-4a61-baef-4107aae96c1a1787598056cmTa','b4533058-454
 const g171 = ['20753e8f-cd07-47ba-ba11-9a27c8ec49d61787322253qxhy','7550e256-1f71-43ff-8381-68140e60b9031787322254pPW2','9903ecd5-aba3-4519-b33b-44d5747e6ee41787322253BXz9','04683659-efc5-45b7-bba3-8c28b6c1fb0e1787322253YUc3','4c2abafc-8847-42bb-98f6-dc83ea8c1f4f17873222517TP2','5a38a631-d89f-4468-8fad-e419496ae63d1787322251cPDh','619a056e-d550-4c69-b87d-b39e21fc730b1787322253wDRN','84be53f1-bc20-4b56-a75f-0de01ab84f191787322251US5X','8c949911-4fbb-4520-b4c1-aa4307789a741787322254hQhu','9d8f56b4-c259-4d2c-827d-a05adf71d13f1787322253jHnS','c6efe96c-a356-44e4-90c4-0438079b2ba817873222547OTB','d1fb5df2-29e8-485d-a0a6-35fa17ff1efd1787322251bFiI','e4ffb2df-47ee-4055-98b8-25bba2ee8def17873222545Qos'].map(x => c + x + '.jpg');
 const g112 = ['6860d6b5-3bee-4955-a178-7c014b448f671759091832CfCI','dc566be1-edcf-40ea-a922-ba93f1977be91759091831wTRL','b83887bc-4f99-40c5-bb38-e7b1ec6a46b91759091830jy7l','0da8653a-4709-4b99-b3c7-84a4bc8ed4711759091835fW1z','14dd9aef-7f55-4caa-97ea-d8b4921d221e17590918437O4p','2b4f2e73-19bf-4a1a-934c-67be02ebe67a1759091833NKX3','64052831-2b79-4ae3-a05d-7b55ddbc91d41759091842POgX','6b9c21d6-e6e2-496e-bf3e-12037db28ba01759091841tAci','78688dc6-880d-4d3d-8ffc-88c7fd0b72c117590918339iSb','7ab2d01c-7b60-4213-a792-a91f299b80ef1759091834YYCK','7f920f0d-5787-4411-a136-6bb3b8f55cb01759091837Aqh3','9028f841-9a06-48ee-b10c-25346c6c6b6d1759091838CpIA','9bcda200-ea94-4340-99a6-686579980f5c1759091836sjTd','aea87ca0-f520-4e81-961a-5f86bbaf9a171759091831R9aW','c29cf9af-7766-4a74-9da1-aec629fa5c841759091839Gk6p','c969d4f8-fcf0-4d8d-b406-892bc3913c4c1759091837aI8L','cf58bee0-98b4-40df-a521-2a6318c5e39f1759091843I9Kx','de7b9ecf-7336-4dfb-8add-9877926014301759091841Y2c8','f87cd097-a0a1-44aa-8d62-d62792f4eac11759091840SSD9'].map(x => t + x + '.jpg');
 
+const salaMA = Array.from({ length: 20 }, (_, i) => `assets/sala-mestre-alvaro/${String(i + 1).padStart(2, '0')}.jpg`);
 const GENERIC = 'Imóvel anunciado pela Abrão Soares. Condições e disponibilidade sob consulta.';
 const LISTINGS = [
+  { reference: 'SMA-01', title: 'Sala comercial decorada no Shopping Mestre Álvaro', location: 'Bloco B · Shopping Mestre Álvaro · Serra/ES', type: 'Sala comercial', rooms: 0, land: 0, area: 32, parking: 0, price: 590000, condoFee: 430, block: 'B', images: salaMA,
+    furnished: 'Porteira fechada, exceto as máquinas de estética',
+    description: 'Sala comercial de 32 m² no Bloco B do Shopping Mestre Álvaro, pronta para começar a atender. Projeto moderno, marcenaria planejada de alto padrão, iluminação bem resolvida e muita luz natural, com janelas de vidro voltadas para o verde. Ideal para saúde, estética, odontologia ou qualquer atendimento de alto padrão. É vendida porteira fechada: fica tudo o que está no imóvel, exceto as máquinas de estética.',
+    features: ['32 m²', 'Recepção com balcão e espera', 'Ambiente de atendimento com bancada e pia', 'Copa', 'Lavabo', 'Marcenaria planejada', 'Iluminação em LED embutida', 'Janelas amplas com vista para o verde'],
+    condoTitle: 'Fica no imóvel',
+    condo: ['Todos os móveis planejados', 'Iluminação e decoração', 'Cadeira de atendimento (estilo odontológica)', 'Cadeira de escritório', 'Bebedouro', 'Micro-ondas', 'Frigobar', 'Saem só as máquinas de estética'] },
   { reference: '160', title: 'Casa térrea no Boulevard Lagoa', location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 3, land: 456, parking: 4, images: g160,
     description: 'Casa térrea pronta para morar, com living integrado, 3 suítes (2 canadenses), closet e escritório reversível. Piscina, churrasqueira e quintal gramado.',
     features: ['3 suítes, 2 canadenses', 'Escritório reversível', 'Closet', 'Living integrado', 'Piscina', 'Churrasqueira', 'Quintal gramado', '4 vagas cobertas'],
@@ -414,9 +421,22 @@ class Component extends DCLogic {
     if (p.parking) s.push({ label: 'Vagas', value: String(p.parking) });
     if (p.type === 'Terreno') s.push({ label: 'Tipo', value: 'Lote' });
     if (p.type === 'Apartamento') s.push({ label: 'Área útil', value: TBC });
+    if (p.type === 'Sala comercial') {
+      if (p.area) s.push({ label: 'Área', value: m2(p.area) });
+      if (p.block) s.push({ label: 'Bloco', value: p.block });
+      if (p.condoFee) s.push({ label: 'Condomínio', value: brl(p.condoFee) });
+    }
     return s;
   }
   fichaFor(p) {
+    if (p.type === 'Sala comercial') {
+      const r = [['Referência', p.reference], ['Tipo', 'Sala comercial'], ['Finalidade', 'Venda'],
+        ['Área', p.area ? m2(p.area) : TBC], ['Bloco', p.block || TBC],
+        ['Valor', p.price ? brl(p.price) : 'Sob consulta']];
+      if (p.price && p.area) r.push(['Valor por m²', brl(Math.round(p.price / p.area))]);
+      r.push(['Condomínio', p.condoFee ? brl(p.condoFee) + ' / mês' : TBC], ['IPTU', TBC], ['Mobília', p.furnished || TBC], ['Localização', p.location]);
+      return r.map(([label, value]) => ({ label, value, color: value === TBC ? '#8b7755' : '#1b3043' }));
+    }
     const isLot = p.type === 'Terreno';
     const rows = [
       ['Referência', p.reference], ['Tipo', isLot ? 'Terreno / lote' : p.type], ['Finalidade', 'Venda'],
@@ -434,19 +454,20 @@ class Component extends DCLogic {
     const grid = (this.props.layout ?? 'Lista') === 'Grade';
     const f = this.state.f;
     const setF = k => e => { const v = e.target.value; this.setState(s => ({ f: { ...s.f, [k]: v } })); };
-    const cities = [...new Set(LISTINGS.map(p => p.location.split(' · ')[1]))];
+    const cities = [...new Set(LISTINGS.map(p => p.location.split(' · ').pop()))];
     const opt = (pairs) => [{ v: '', l: 'Todos' }].concat(pairs.map(([v, l]) => ({ v, l })));
     const selects = [
       { label: 'Finalidade', key: 'purpose', options: opt([['Venda', 'Venda']]) },
       { label: 'Localização', key: 'city', options: opt(cities.map(c => [c, c])) },
-      { label: 'Tipo', key: 'type', options: opt([['Casa', 'Casa'], ['Apartamento', 'Apartamento'], ['Terreno', 'Terreno']]) },
+      { label: 'Tipo', key: 'type', options: opt([['Casa', 'Casa'], ['Apartamento', 'Apartamento'], ['Terreno', 'Terreno'], ['Sala comercial', 'Sala comercial']]) },
       { label: 'Quartos', key: 'rooms', options: opt([['1', '1+'], ['2', '2+'], ['3', '3+'], ['4', '4+']]) },
       { label: 'Preço máximo', key: 'max', options: opt([['1000000', 'Até R$ 1 milhão'], ['3000000', 'Até R$ 3 milhões'], ['5000000', 'Até R$ 5 milhões'], ['10000000', 'Até R$ 10 milhões']]) },
     ].map(x => ({ ...x, value: f[x.key], change: setF(x.key) }));
     const match = p => (!f.city || p.location.endsWith(f.city)) && (!f.type || p.type === f.type) && (!f.rooms || p.rooms >= +f.rooms) && (!f.max || (p.price && p.price <= +f.max));
     const card = p => ({ ...p, p1: p.images[0], p2: p.images[1], p3: p.images[2], more: p.images.length - 3,
       specs: this.specsFor(p), priceLabel: p.price ? brl(p.price) : 'Valor sob consulta',
-      showPpm: showPpm && !!(p.price && p.land), ppm: p.price && p.land ? brl(Math.round(p.price / p.land)) : '',
+      showPpm: showPpm && !!(p.price && (p.land || p.area)), ppm: p.price && (p.land || p.area) ? brl(Math.round(p.price / (p.land || p.area))) : '',
+      ppmUnit: p.land ? 'm² de terreno' : 'm²',
       open: e => { e && e.preventDefault && e.preventDefault(); this.open(p.reference); } });
     const shown = LISTINGS.filter(match).map(card);
     const cur = this.current();
@@ -454,7 +475,7 @@ class Component extends DCLogic {
     cur.images.slice(0, 5).forEach((src, i) => { d['g' + i] = src; d['lb' + i] = () => this.setState({ lb: i }); });
     Object.assign(d, {
       purpose: 'Venda', photoTotal: cur.images.length, ficha: this.fichaFor(cur),
-      description: cur.description || GENERIC, hasFeatures: !!cur.features, features: cur.features || [], condo: cur.condo || [],
+      description: cur.description || GENERIC, hasFeatures: !!cur.features, condoTitle: cur.condoTitle || 'Condomínio', features: cur.features || [], condo: cur.condo || [],
       photos: cur.images.map((src, i) => ({ src, n: i + 1, open: () => this.setState({ lb: i }) })),
       wa: 'https://wa.me/5527988287777?text=' + encodeURIComponent(`Olá! Quero saber mais sobre o imóvel ref. ${cur.reference}.`),
     });
