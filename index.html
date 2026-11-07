@@ -254,6 +254,7 @@ a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
         <div style="text-align:right">
           <div style="font-size:clamp(28px,3vw,40px);font-weight:700;letter-spacing:-.01em">{{ d.priceLabel }}</div>
           <sc-if value="{{ d.showPpm }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;color:#647078">{{ d.ppm }} / {{ d.ppmUnit }}</div></sc-if>
+          <a href="{{ d.share }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:12px;border:1px solid #c4b18d;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#1b3043" style-hover="background:#eee8dc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1b3043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"></path></svg>Enviar pelo WhatsApp</a>
         </div>
       </div>
 
@@ -315,6 +316,7 @@ a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
           <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#baa075;font-weight:600">Ref. {{ d.reference }}</div>
           <div style="font-family:'Instrument Serif',serif;font-size:32px;line-height:1.1">Agende uma visita ou peça mais informações.</div>
           <a href="{{ d.wa }}" target="_blank" style="background:#baa075;color:#1b3043;text-align:center;padding:16px;border-radius:999px;font-weight:700;font-size:15px">Falar no WhatsApp</a>
+          <a href="{{ d.share }}" target="_blank" rel="noopener" style="border:1px solid #baa075;color:#faf9f6;text-align:center;padding:14px;border-radius:999px;font-weight:600;font-size:14px;margin-top:-8px" style-hover="background:#24394c">Enviar este imóvel para alguém</a>
           <div style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:#d5dbe0;border-top:1px solid #34495b;padding-top:18px">
             <a href="tel:+5527988287777" style="color:#faf9f6">(27) 98828-7777</a>
             <a href="tel:+5527988321999" style="color:#faf9f6">(27) 98832-1999</a>
@@ -379,7 +381,7 @@ const g112 = ['6860d6b5-3bee-4955-a178-7c014b448f671759091832CfCI','dc566be1-edc
 const salaMA = Array.from({ length: 20 }, (_, i) => `assets/sala-mestre-alvaro/${String(i + 1).padStart(2, '0')}.jpg`);
 const GENERIC = 'Imóvel anunciado pela Abrão Soares. Condições e disponibilidade sob consulta.';
 const LISTINGS = [
-  { reference: 'SMA-01', title: 'Sala comercial decorada no Shopping Mestre Álvaro', location: 'Bloco B · Shopping Mestre Álvaro · Serra/ES', type: 'Sala comercial', rooms: 0, land: 0, area: 32, parking: 0, price: 590000, condoFee: 430, block: 'B', images: salaMA,
+  { reference: 'SMA-01', title: 'Sala comercial decorada no Shopping Mestre Álvaro', location: 'Bloco B · Shopping Mestre Álvaro · Serra/ES', type: 'Sala comercial', rooms: 0, land: 0, area: 32, parking: 0, price: 590000, condoFee: 430, block: 'B', images: salaMA, shareImage: 'assets/sala-mestre-alvaro/compartilhar.jpg',
     furnished: 'Porteira fechada, exceto as máquinas de estética',
     description: 'Sala comercial de 32 m² no Bloco B do Shopping Mestre Álvaro, pronta para começar a atender. Projeto moderno, marcenaria planejada de alto padrão, iluminação bem resolvida e muita luz natural, com janelas de vidro voltadas para o verde. Ideal para saúde, estética, odontologia ou qualquer atendimento de alto padrão. É vendida porteira fechada: fica tudo o que está no imóvel, exceto as máquinas de estética.',
     features: ['32 m²', 'Recepção com balcão e espera', 'Ambiente de atendimento com bancada e pia', 'Copa', 'Lavabo', 'Marcenaria planejada', 'Iluminação em LED embutida', 'Janelas amplas com vista para o verde'],
@@ -397,9 +399,19 @@ const LISTINGS = [
 const brl = n => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
 const m2 = n => n.toLocaleString('pt-BR') + ' m²';
 const TBC = 'A confirmar';
+const SITE = 'https://www.abraosoares.com';
+const slugOf = ref => String(ref).toLowerCase();
+const shareUrl = p => `${SITE}/imovel/${slugOf(p.reference)}`;
+const refFromHash = () => {
+  const m = /^#imovel\/([^/?#]+)/i.exec(typeof location !== 'undefined' ? location.hash : '');
+  if (!m) return null;
+  const p = LISTINGS.find(x => slugOf(x.reference) === decodeURIComponent(m[1]).toLowerCase());
+  return p ? p.reference : null;
+};
+const BASE_TITLE = 'Abrão Soares Corretores de Imóveis';
 
 class Component extends DCLogic {
-  state = { view: 'home', ref: null, f: { purpose: '', city: '', type: '', rooms: '', max: '' }, lb: null, menu: false };
+  state = { view: refFromHash() ? 'detail' : 'home', ref: refFromHash(), f: { purpose: '', city: '', type: '', rooms: '', max: '' }, lb: null, menu: false };
   componentDidMount() {
     this.onKey = e => {
       if (e.key === 'Escape' && this.state.menu) this.setState({ menu: false });
@@ -409,11 +421,29 @@ class Component extends DCLogic {
       if (e.key === 'ArrowLeft') this.step(-1);
     };
     window.addEventListener('keydown', this.onKey);
+    this.onNav = () => {
+      const ref = refFromHash();
+      if (ref) { if (ref !== this.state.ref || this.state.view !== 'detail') { this.setState({ view: 'detail', ref, lb: null, menu: false }); window.scrollTo(0, 0); } }
+      else if (!location.hash && this.state.view === 'detail') this.setState({ view: 'home', lb: null, menu: false });
+    };
+    window.addEventListener('popstate', this.onNav);
+    window.addEventListener('hashchange', this.onNav);
+    this.syncTitle();
   }
-  componentWillUnmount() { window.removeEventListener('keydown', this.onKey); }
+  componentDidUpdate() { this.syncTitle(); }
+  componentWillUnmount() { window.removeEventListener('keydown', this.onKey); window.removeEventListener('popstate', this.onNav); window.removeEventListener('hashchange', this.onNav); }
+  syncTitle() {
+    const t = this.state.view === 'detail' ? `${this.current().title} · Abrão Soares` : BASE_TITLE;
+    if (document.title !== t) document.title = t;
+  }
+  setHash(ref) {
+    const want = ref ? '#imovel/' + slugOf(ref) : '';
+    if (location.hash.toLowerCase() === want) return;
+    try { history.pushState(null, '', want || (location.pathname + location.search)); } catch (e) { if (want) location.hash = want; }
+  }
   current() { return LISTINGS.find(p => p.reference === this.state.ref) || LISTINGS[0]; }
   step(d) { const n = this.current().images.length; this.setState(s => ({ lb: (s.lb + d + n) % n })); }
-  open(ref) { this.setState({ view: 'detail', ref, lb: null }); window.scrollTo(0, 0); }
+  open(ref) { this.setHash(ref); this.setState({ view: 'detail', ref, lb: null }); window.scrollTo(0, 0); }
   specsFor(p) {
     const s = [];
     if (p.land) s.push({ label: 'Terreno', value: m2(p.land) });
@@ -477,7 +507,8 @@ class Component extends DCLogic {
       purpose: 'Venda', photoTotal: cur.images.length, ficha: this.fichaFor(cur),
       description: cur.description || GENERIC, hasFeatures: !!cur.features, condoTitle: cur.condoTitle || 'Condomínio', features: cur.features || [], condo: cur.condo || [],
       photos: cur.images.map((src, i) => ({ src, n: i + 1, open: () => this.setState({ lb: i }) })),
-      wa: 'https://wa.me/5527988287777?text=' + encodeURIComponent(`Olá! Quero saber mais sobre o imóvel ref. ${cur.reference}.`),
+      wa: 'https://wa.me/5527988287777?text=' + encodeURIComponent(`Olá! Quero saber mais sobre o imóvel ref. ${cur.reference}: ${shareUrl(cur)}`),
+      share: 'https://wa.me/?text=' + encodeURIComponent(`${cur.title} · ${d.priceLabel}\n${shareUrl(cur)}`),
     });
     const lb = this.state.lb;
     return {
@@ -490,8 +521,8 @@ class Component extends DCLogic {
       navImoveis: this.state.view === 'detail' ? '#947c51' : '#1b3043', navImoveisLine: this.state.view === 'detail' ? 1 : 0,
       catalogCols: grid ? 'repeat(auto-fill,minmax(min(100%,420px),1fr))' : '1fr',
       cardCols: grid ? '1fr' : 'repeat(auto-fit,minmax(min(100%,440px),1fr))',
-      goHome: e => { e.preventDefault(); this.setState({ view: 'home', lb: null, menu: false }); window.scrollTo(0, 0); },
-      goCatalog: e => { e.preventDefault(); this.setState({ view: 'home', lb: null, menu: false }, () => { const el = document.getElementById('imoveis'); if (el) window.scrollTo(0, el.offsetTop - 80); }); },
+      goHome: e => { e.preventDefault(); this.setHash(null); this.setState({ view: 'home', lb: null, menu: false }); window.scrollTo(0, 0); },
+      goCatalog: e => { e.preventDefault(); this.setHash(null); this.setState({ view: 'home', lb: null, menu: false }, () => { const el = document.getElementById('imoveis'); if (el) window.scrollTo(0, el.offsetTop - 80); }); },
       openFeatured: e => { e.preventDefault(); this.open('175'); },
       lbOpen: lb != null, lbSrc: lb != null ? cur.images[lb] : '', lbCounter: lb != null ? `${lb + 1} / ${cur.images.length}` : '',
       lbClose: () => this.setState({ lb: null }),
