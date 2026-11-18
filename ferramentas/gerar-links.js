@@ -20,7 +20,7 @@ const dir = path.join(root, 'imovel');
 fs.rmSync(dir, { recursive: true, force: true });
 for (const p of LISTINGS) {
   const slug = slugOf(p.reference);
-  const price = p.price ? brl(p.price) : 'Valor sob consulta';
+  const price = p.price ? brl(p.price) + (p.rent ? ' / mês' : '') : 'Valor sob consulta';
   const specs = c.specsFor(p).map(s => `${s.label} ${s.value}`).filter(s => !p.location.includes(s) && !s.includes('A confirmar') && !s.startsWith('Tipo '));
   const desc = [price, ...specs, p.location].join(' · ');
   const title = `${p.title} · ${price}`;

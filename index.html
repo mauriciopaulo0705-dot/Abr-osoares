@@ -209,7 +209,7 @@ a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
               <img src="{{ p.p2 }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
               <div style="position:relative">
                 <img src="{{ p.p3 }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
-                <div style="position:absolute;inset:0;background:#1b3043b3;color:#faf9f6;display:grid;place-items:center;font-size:14px;font-weight:600">+{{ p.more }} fotos</div>
+                <div style="position:absolute;inset:0;background:{{ p.moreBg }};color:#faf9f6;display:grid;place-items:center;font-size:14px;font-weight:600">{{ p.moreLabel }}</div>
               </div>
             </div>
             <div style="padding:clamp(22px,2.6vw,36px);display:flex;flex-direction:column;gap:22px">
@@ -265,7 +265,7 @@ a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
         <img src="{{ d.g3 }}" alt="" onClick="{{ d.lb3 }}" style="width:100%;height:100%;object-fit:cover;cursor:zoom-in;display:block">
         <div onClick="{{ d.lb4 }}" style="position:relative;cursor:zoom-in">
           <img src="{{ d.g4 }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
-          <div style="position:absolute;inset:0;background:#1b3043b8;color:#faf9f6;display:grid;place-items:center;font-weight:600;font-size:15px">Ver as {{ d.photoTotal }} fotos</div>
+          <div style="position:absolute;inset:0;background:{{ d.photoBg }};color:#faf9f6;display:grid;place-items:center;font-weight:600;font-size:15px">{{ d.photoLabel }}</div>
         </div>
       </div>
 
@@ -379,6 +379,8 @@ const g171 = ['20753e8f-cd07-47ba-ba11-9a27c8ec49d61787322253qxhy','7550e256-1f7
 const g112 = ['6860d6b5-3bee-4955-a178-7c014b448f671759091832CfCI','dc566be1-edcf-40ea-a922-ba93f1977be91759091831wTRL','b83887bc-4f99-40c5-bb38-e7b1ec6a46b91759091830jy7l','0da8653a-4709-4b99-b3c7-84a4bc8ed4711759091835fW1z','14dd9aef-7f55-4caa-97ea-d8b4921d221e17590918437O4p','2b4f2e73-19bf-4a1a-934c-67be02ebe67a1759091833NKX3','64052831-2b79-4ae3-a05d-7b55ddbc91d41759091842POgX','6b9c21d6-e6e2-496e-bf3e-12037db28ba01759091841tAci','78688dc6-880d-4d3d-8ffc-88c7fd0b72c117590918339iSb','7ab2d01c-7b60-4213-a792-a91f299b80ef1759091834YYCK','7f920f0d-5787-4411-a136-6bb3b8f55cb01759091837Aqh3','9028f841-9a06-48ee-b10c-25346c6c6b6d1759091838CpIA','9bcda200-ea94-4340-99a6-686579980f5c1759091836sjTd','aea87ca0-f520-4e81-961a-5f86bbaf9a171759091831R9aW','c29cf9af-7766-4a74-9da1-aec629fa5c841759091839Gk6p','c969d4f8-fcf0-4d8d-b406-892bc3913c4c1759091837aI8L','cf58bee0-98b4-40df-a521-2a6318c5e39f1759091843I9Kx','de7b9ecf-7336-4dfb-8add-9877926014301759091841Y2c8','f87cd097-a0a1-44aa-8d62-d62792f4eac11759091840SSD9'].map(x => t + x + '.jpg');
 
 const salaMA = Array.from({ length: 20 }, (_, i) => `assets/sala-mestre-alvaro/${String(i + 1).padStart(2, '0')}.jpg`);
+const P2 = s => { const [id, f] = s.split('/'); return `${B}/properties/${id}/images/${f}.jpg`; };
+const LOGO = `${B}/settings/logos/270x140/outside/cb3502e9-447e-4fc0-a430-d721520da4481758797153FHiW.png`;
 const GENERIC = 'Imóvel anunciado pela Abrão Soares. Condições e disponibilidade sob consulta.';
 const LISTINGS = [
   { reference: 'SMA-01', title: 'Sala comercial decorada no Shopping Mestre Álvaro', location: 'Bloco B · Shopping Mestre Álvaro · Serra/ES', type: 'Sala comercial', rooms: 0, land: 0, area: 32, parking: 0, price: 590000, condoFee: 430, block: 'B', images: salaMA, shareImage: 'assets/sala-mestre-alvaro/compartilhar.jpg',
@@ -395,6 +397,56 @@ const LISTINGS = [
   { reference: '176', title: 'Casa alto padrão Boulevard Lagoa', location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 1, land: 300, parking: 4, price: 2690000, images: g176 },
   { reference: '171', title: 'Apartamento no Barro Vermelho', location: 'Barro Vermelho · Vitória/ES', type: 'Apartamento', rooms: 4, land: 0, parking: 4, price: 8900000, images: g171 },
   { reference: '112', title: 'Terreno na Fazenda Barão do Império', location: 'Barra do Mangaraí · Santa Leopoldina/ES', type: 'Terreno', rooms: 0, land: 1050, parking: 0, price: 661720, images: g112 },
+  { reference: '168', title: "Casa alto padrão em Ilha do Frade", location: 'Ilha do Frade · Vitória/ES', type: 'Casa', rooms: 3, land: 745, parking: 4, area: 1000, beds: 5, price: 21000000, images: [P2('47c7da5d-7138-40f4-82f9-eafdb0e87ee3/21f02e95-c5cd-47c2-b739-44bdd2b243771781723391kUH8')] },
+  { reference: '164', title: "Casa alto padrão em Centro", location: 'Centro · Domingos Martins/ES', type: 'Casa', rooms: 8, land: 20000, parking: 15, area: 600, beds: 8, price: 10000000, images: [P2('f9adb930-d9db-404a-bcea-b993624b7a6c/5fa0792b-7965-45fb-b20e-fcbe7f8a22a51781286224XHsK')] },
+  { reference: '170', title: "Apartamento alto padrão em Praia do Canto", location: 'Praia do Canto · Vitória/ES', type: 'Apartamento', rooms: 4, land: 0, parking: 4, area: 382, beds: 4, price: 8500000, images: [P2('cb39aa90-b0bf-4e02-9b3e-26c8d1af456a/d60e84a5-dbc8-4c43-a557-1130f0afb93317830170267Zon')] },
+  { reference: '154', title: "Casa alto padrão em Jacuhy", location: 'Jacuhy · Serra/ES', type: 'Casa', rooms: 4, land: 579, parking: 0, area: 360, beds: 4, price: 6900000, images: [P2('c1e275c4-88e3-4899-b316-206c0095852a/52138abb-4756-415b-b855-cfe2bb29eadd17805135644YXv')] },
+  { reference: '169', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 3, land: 622, parking: 4, area: 536, beds: 4, price: 6700000, images: [P2('a390c679-8693-4c22-8214-ca979240638d/bfb6a480-28fe-4306-b1da-7563129e1d531781895642aoMW')] },
+  { reference: '113', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 3, land: 440, parking: 8, area: 530, beds: 4, price: 6500000, images: [P2('88cd716c-598a-428d-9bac-ba7e66235b41/a5b1cbe1-5d3b-4bd2-a69b-c817f458a5511759092969k1CV')] },
+  { reference: '162', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 5, land: 0, parking: 10, beds: 5, price: 6500000, images: [P2('a1bfd545-ceab-45ca-8972-cee8135872e9/8e723313-c3ac-4ea4-80fe-1fb86f63365517871687520nZm')] },
+  { reference: '139', title: "Casa alto padrão em Jacuhy", location: 'Jacuhy · Serra/ES', type: 'Casa', rooms: 3, land: 511, parking: 4, area: 506, beds: 4, price: 5500000, images: [P2('facff5bf-3f3a-4b15-8a35-56b5ef89b1c4/73f5d84c-2208-459f-a4a5-fa47b32df1db1776366260O0wL')] },
+  { reference: '133', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 4, land: 603.07, parking: 10, area: 486.44, beds: 4, price: 5400000, images: [P2('5c0f56db-69f2-481f-9b95-cc8aedab14cd/9c03bcc3-e5ac-48d4-bf5d-67589b7fedf61764967707qlZ2')] },
+  { reference: '128', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 3, land: 0, parking: 4, beds: 3, price: 4500000, images: [P2('97ef74e4-cf8c-4c02-9b57-cfe6d25c18b1/7d743c30-8d38-498b-b5d5-99b79cfab36e178050899868XY')] },
+  { reference: '157', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 4, land: 455, parking: 4, area: 360, beds: 5, price: 4500000, images: [P2('88104512-adca-409e-bab5-8432fd4c2b98/fae186bd-829a-407c-b197-b72a85fe19441780943565t0bR')] },
+  { reference: '122', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 4, land: 580.15, parking: 4, beds: 4, price: 4200000, images: [P2('30645804-63a9-4eb5-bf05-bd66acca09b5/83991613-7c9b-4080-a9a2-be342be918661764179242DLZP')] },
+  { reference: '131', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 4, land: 455, parking: 4, price: 4200000, images: [P2('aa6085b7-ac22-47ec-97d1-ca93b86cd9a6/f91feacb-0ec0-41ae-a6e1-4c771c0a50f51781201140sgSq')] },
+  { reference: '161', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 4, land: 455, parking: 4, beds: 4, price: 4000000, images: [P2('82f9a850-0a3e-400f-be25-960b20cb0f74/30a72147-2c38-489b-abce-d2d1f93c5cec1781205079IiyO')] },
+  { reference: '118', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 4, land: 0, parking: 4, area: 380, beds: 4, price: 3900000, images: [P2('ecff6c16-7bc9-459f-8625-905be0e341ea/b4439fd4-5f2b-49f4-aee7-c528902e85fe1759153815vDOU')] },
+  { reference: '166', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 3, land: 569, parking: 4, area: 328, beds: 4, price: 3800000, images: [P2('260d168e-aafb-4c03-b253-5925cf66e49e/9f2268cb-7cff-4857-8894-00f37771a72e1781719935HoRk')] },
+  { reference: '158', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 4, land: 450, parking: 0, area: 292, beds: 4, price: 3300000, images: [P2('6bc28746-7054-4f25-8f23-0c664febade2/ac141fcc-45f0-4087-b787-030a91d5302b17870598644zwX')] },
+  { reference: '121', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 3, land: 455, parking: 4, area: 338, beds: 3, price: 3290000, images: [P2('a4e05e1f-4d6f-4a7d-a353-04e2356d0717/08b1e379-1f04-411b-996a-9940d61a2b421780942647lteS')] },
+  { reference: '167', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 4, land: 504, parking: 6, area: 280, beds: 4, price: 3200000, images: [P2('b07a18a4-c55a-4ecf-8323-34f737566a90/e39cb7b4-b26b-4ae9-ad70-3ca553afbd5d1781721670GreJ')] },
+  { reference: '150', title: "Casa alto padrão em Jacuhy", location: 'Jacuhy · Serra/ES', type: 'Casa', rooms: 3, land: 500, parking: 4, area: 280, beds: 4, price: 3190000, images: [P2('48e985f4-0a0d-454e-ad6d-6d5a367a2cc3/453fedaf-d07b-49c4-a031-4a495966f8411780338035o3qA')] },
+  { reference: '115', title: "Casa alto padrão em Centro", location: 'Centro · Santa Teresa/ES', type: 'Casa', rooms: 3, land: 4000, parking: 10, area: 530, beds: 4, price: 3150000, images: [P2('0a7c4ba2-44c2-42b5-addf-c87d291a6c59/a5b765a5-e51a-458c-87f3-eeeb25a73efa1759095416Kz0T')] },
+  { reference: '135', title: "Terreno em condomínio · Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Terreno', rooms: 0, land: 1365, parking: 0, price: 3100000, images: [P2('3262a660-864b-4016-8db5-bd1ffa522727/c5ef1cfe-cb96-4bc7-96cf-497a968e27aa1773940948aUHe')] },
+  { reference: '149', title: "Casa alto padrão em Jacuhy", location: 'Jacuhy · Serra/ES', type: 'Casa', rooms: 3, land: 480, parking: 4, area: 280, beds: 4, price: 2850000, images: [P2('321033dc-1684-41ba-a646-19275b8af955/7bc878f8-089f-4dad-a302-885fb1f85dd91780080177ZiUj')] },
+  { reference: '141', title: "Área comercial em Alterosas", location: 'Alterosas · Serra/ES', type: 'Área comercial', rooms: 0, land: 2000, parking: 0, price: 2800000, images: [P2('7b93a72d-afa3-4f64-af92-72f65e36d42b/6008283c-ffdb-40b0-a9e6-2c7b5510bec41776880061aJMl')] },
+  { reference: '148', title: "Casa alto padrão em Jacuhy", location: 'Jacuhy · Serra/ES', type: 'Casa', rooms: 3, land: 481, parking: 4, area: 226, beds: 3, price: 2800000, images: [P2('481b033f-aff6-4e39-b95b-983d96fff993/cf41e36d-d398-489e-9edb-06435135fb9f1780078876T1kW')] },
+  { reference: '104', title: "Casa duplex em Jacaraípe", location: 'Jacaraípe · Serra/ES', type: 'Casa', rooms: 3, land: 480, parking: 3, area: 355, beds: 4, price: 2550000, images: [P2('f782566d-00ff-4a49-8986-a68d5a0ae2e5/3a347a91-6408-481b-aedc-33ca0e3a08891759084889ml7f')] },
+  { reference: '165', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 3, land: 455, parking: 4, beds: 5, price: 2500000, images: [P2('35fc8edf-294f-4519-a68c-c0ed9a3e0ba0/0761a06e-e7fc-47f2-aa05-b1f27347b6ff1781717197krLd')] },
+  { reference: '117', title: "Casa em condomínio em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 2, land: 450, parking: 4, beds: 4, price: 2499000, images: [P2('cb2c3e7b-3e38-4dcd-8f8f-cc3994e0b126/e04f2894-ec64-447e-9bbd-ea13bd738f9e175909657287sc')] },
+  { reference: '142', title: "Galpão industrial em Nova Zelândia", location: 'Nova Zelândia · Serra/ES', type: 'Galpão industrial', rooms: 0, land: 0, parking: 0, area: 1000, price: 2300000, images: [P2('f10c7c20-5c4e-4026-a5f8-7cee50609820/deecc631-8d82-41e9-b8e2-ca910403d45d1776893648p8qQ')] },
+  { reference: '136', title: "Casa alto padrão em Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Casa', rooms: 3, land: 455, parking: 4, beds: 3, price: 2200000, images: [P2('5b5146c4-b4cd-40f6-b8f5-954b494e4b62/e2063fd7-d745-4129-8b8d-7fcc6a6f74b71774461895iy1G')] },
+  { reference: '126', title: "Chácara em Balneário de Carapebus", location: 'Balneário de Carapebus · Serra/ES', type: 'Chácara', rooms: 1, land: 2000, parking: 0, beds: 3, price: 1900000, images: [P2('52db466c-bea9-407f-8a31-913cdce5d4e8/e572ae89-5ff5-4c13-9e22-5d0fe0d2f9db1764361411sSIL')] },
+  { reference: '116', title: "Casa em condomínio em Centro", location: 'Centro · Santa Teresa/ES', type: 'Casa', rooms: 0, land: 0, parking: 4, area: 220, beds: 3, price: 1600000, images: [P2('6c42f637-9288-408f-9a56-21299befef80/885d3cb2-6fda-412a-87a5-adaf176947e91759096018raQI')] },
+  { reference: '173', title: "Loja em Parque Residencial Laranjeiras", location: 'Parque Residencial Laranjeiras · Serra/ES', type: 'Loja', rooms: 0, land: 0, parking: 2, area: 253, beds: 3, price: 1500000, images: [P2('4128e15e-aa96-47de-8cf8-0654452780de/a2f56250-f00d-45a2-b2de-859f332a9ba31784641957IXK7')] },
+  { reference: '140', title: "Área comercial em Alterosas", location: 'Alterosas · Serra/ES', type: 'Área comercial', rooms: 0, land: 1000, parking: 0, price: 1400000, images: [P2('95c81f8d-93e0-4169-a7b8-83c6c18ec8e6/ae6384a6-7dee-4440-b6e7-bb9ccf0356961776879792jQj2')] },
+  { reference: '102', title: "Apartamento alto padrão em Parque Residencial Laranjeiras", location: 'Parque Residencial Laranjeiras · Serra/ES', type: 'Apartamento', rooms: 3, land: 0, parking: 2, area: 142, beds: 3, price: 1390000, images: [P2('aa3282ac-b471-4c23-8afc-4187a69c81b6/b0b07e4f-0441-481a-8f38-b836e13d22c41756144141jN8V')] },
+  { reference: '134', title: "Terreno em condomínio · Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Terreno', rooms: 0, land: 455, parking: 0, price: 1000000, images: [P2('2135ec69-acc4-4dda-907d-4a76ced3466b/a579d946-5066-443d-b0cb-b509c40a15a81773940500Wb3o')] },
+  { reference: '174', title: "Terreno em condomínio · Boulevard Lagoa", location: 'Boulevard Lagoa · Serra/ES', type: 'Terreno', rooms: 0, land: 565.5, parking: 0, price: 950000, images: [LOGO] },
+  { reference: '147', title: "Casa em Manguinhos", location: 'Manguinhos · Serra/ES', type: 'Casa', rooms: 1, land: 95, parking: 2, area: 95, beds: 3, price: 850000, images: [P2('3e03d951-4c32-4e76-8047-03706a92fcd0/eaf07780-2d31-4686-8d66-ff0de270ec401779729594JT7e')] },
+  { reference: '103', title: "Casa em condomínio em Praia da Baleia", location: 'Praia da Baleia · Serra/ES', type: 'Casa', rooms: 1, land: 0, parking: 2, area: 124, beds: 3, price: 830000, images: [P2('588a1abf-a174-456a-b12a-ccae489f2293/b1ed0e47-e3a2-4b13-9df5-a3f643e79bcd1759084117LlfB')] },
+  { reference: '109', title: "Terreno em condomínio · Barra do Mangaraí", location: 'Barra do Mangaraí · Santa Leopoldina/ES', type: 'Terreno', rooms: 0, land: 1932.86, parking: 0, price: 830000, status: 'Em obras', images: [P2('7eedb2e8-1432-4d67-809d-e574cff031f9/19593268-e5a8-41f3-b19c-c6aefeb52c7d1759091455dwaY')] },
+  { reference: '108', title: "Terreno em condomínio · Centro", location: 'Centro · Santa Teresa/ES', type: 'Terreno', rooms: 0, land: 1910.13, parking: 0, price: 690999, status: 'Em obras', images: [P2('dcd61d63-1b2a-4610-b521-2a0f5578694b/09e2f7d1-c16e-4a92-92ee-d3e9afe2f64a1759089264cVE6')] },
+  { reference: '105', title: "Terreno em condomínio · Centro", location: 'Centro · Santa Teresa/ES', type: 'Terreno', rooms: 0, land: 1541.72, parking: 0, price: 689634.23, status: 'Em obras', images: [P2('95f23e26-f997-4924-9398-296fd2f7706b/e9530a40-2108-4b6b-abfa-e606dec783871759088789OvfB')] },
+  { reference: '163', title: "Terreno em condomínio · Vale Encantado", location: 'Vale Encantado · Vila Velha/ES', type: 'Terreno', rooms: 0, land: 360.47, parking: 0, price: 612408, status: 'Em obras', images: [P2('36c080fa-7730-49b0-b061-0dbce6f26b9d/82a85bd0-33bc-4d27-8237-7cef034103e51781278049jJ22')] },
+  { reference: '106', title: "Terreno em condomínio · Centro", location: 'Centro · Santa Teresa/ES', type: 'Terreno', rooms: 0, land: 949.54, parking: 0, price: 575753.97, status: 'Em obras', images: [P2('fe5a3fc0-e99b-4039-bbe3-79da4d0ac487/09d0c506-ae4e-46ad-8307-6bb8282c84d81759088929Tcen')] },
+  { reference: '107', title: "Terreno em condomínio · Centro", location: 'Centro · Santa Teresa/ES', type: 'Terreno', rooms: 0, land: 753.45, parking: 0, price: 500000, status: 'Em obras', images: [P2('f8f25290-b64a-49c8-b04e-250ab74b6da4/df1d1714-be39-49c3-801e-cb84d6a88fe61759089136ToxS')] },
+  { reference: '111', title: "Terreno em condomínio · Barra do Mangaraí", location: 'Barra do Mangaraí · Santa Leopoldina/ES', type: 'Terreno', rooms: 0, land: 1050, parking: 0, price: 420000, status: 'Em obras', images: [P2('4fddc96f-3ba2-41be-8bf7-5e994fb7bb5c/11618652-104a-4310-96ea-87073bd4aacd17590917566lh5')] },
+  { reference: '145', title: "Apartamento em Jardim Tropical", location: 'Jardim Tropical · Serra/ES', type: 'Apartamento', rooms: 0, land: 0, parking: 1, beds: 2, price: 350000, images: [P2('44f1ce43-18aa-419a-817a-211b9f2e005c/08313837-d6d8-49c3-b529-eec0b318052b17782691757bn6')] },
+  { reference: '146', title: "Apartamento em Portal de Jacaraípe", location: 'Portal de Jacaraípe · Serra/ES', type: 'Apartamento', rooms: 0, land: 0, parking: 1, area: 63, beds: 2, price: 240000, images: [P2('366bba49-88a5-4f48-b0ea-26010548af48/b89ea4d8-754a-4395-93f5-29a40b5821cc1779387525u3Zz')] },
+  { reference: '132', title: "Apartamento em Praia de Itaparica", location: 'Praia de Itaparica · Vila Velha/ES', type: 'Apartamento', rooms: 1, land: 0, parking: 2, beds: 3, price: 4000, rent: true, images: [P2('cd0400a8-a0a3-458f-9ddd-37b49e6f9573/66d727c0-4238-49d4-b82f-27591fa0fea81764942262XjeO')] },
+  { reference: '151', title: "Apartamento em Morada de Laranjeiras", location: 'Morada de Laranjeiras · Serra/ES', type: 'Apartamento', rooms: 1, land: 0, parking: 1, area: 59.2, beds: 2, price: 2500, rent: true, images: [LOGO] },
 ];
 const brl = n => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
 const m2 = n => n.toLocaleString('pt-BR') + ' m²';
@@ -447,10 +499,12 @@ class Component extends DCLogic {
   specsFor(p) {
     const s = [];
     if (p.land) s.push({ label: 'Terreno', value: m2(p.land) });
+    if (p.area && p.type !== 'Sala comercial' && p.type !== 'Apartamento') s.push({ label: 'Construída', value: m2(p.area) });
+    if (p.beds) s.push({ label: 'Quartos', value: String(p.beds) });
     if (p.rooms) s.push({ label: 'Suítes', value: String(p.rooms) });
     if (p.parking) s.push({ label: 'Vagas', value: String(p.parking) });
     if (p.type === 'Terreno') s.push({ label: 'Tipo', value: 'Lote' });
-    if (p.type === 'Apartamento') s.push({ label: 'Área útil', value: TBC });
+    if (p.type === 'Apartamento') s.push({ label: 'Área útil', value: p.area ? m2(p.area) : TBC });
     if (p.type === 'Sala comercial') {
       if (p.area) s.push({ label: 'Área', value: m2(p.area) });
       if (p.block) s.push({ label: 'Bloco', value: p.block });
@@ -467,15 +521,16 @@ class Component extends DCLogic {
       r.push(['Condomínio', p.condoFee ? brl(p.condoFee) + ' / mês' : TBC], ['IPTU', TBC], ['Mobília', p.furnished || TBC], ['Localização', p.location]);
       return r.map(([label, value]) => ({ label, value, color: value === TBC ? '#8b7755' : '#1b3043' }));
     }
-    const isLot = p.type === 'Terreno';
+    const isLot = p.type === 'Terreno' || p.type === 'Área comercial';
     const rows = [
-      ['Referência', p.reference], ['Tipo', isLot ? 'Terreno / lote' : p.type], ['Finalidade', 'Venda'],
+      ['Referência', p.reference], ['Tipo', isLot ? 'Terreno / lote' : p.type], ['Finalidade', p.rent ? 'Aluguel' : 'Venda'],
       ['Área do terreno', p.land ? m2(p.land) : (p.type === 'Apartamento' ? '—' : TBC)],
     ];
     if (isLot) rows.push(['Frente × fundo', TBC], ['Topografia', TBC]);
-    else rows.push(['Área construída', TBC], ['Suítes', p.rooms ? String(p.rooms) : TBC], ['Vagas de garagem', p.parking ? String(p.parking) : TBC]);
-    rows.push(['Valor', p.price ? brl(p.price) : 'Sob consulta']);
-    if (p.price && p.land) rows.push(['Valor por m² de terreno', brl(Math.round(p.price / p.land))]);
+    else rows.push(['Área construída', p.area ? m2(p.area) : TBC], ['Quartos', p.beds ? String(p.beds) : TBC], ['Suítes', p.rooms ? String(p.rooms) : TBC], ['Vagas de garagem', p.parking ? String(p.parking) : TBC]);
+    rows.push(['Valor', p.price ? brl(p.price) + (p.rent ? ' / mês' : '') : 'Sob consulta']);
+    if (p.status) rows.push(['Situação', p.status]);
+    if (p.price && p.land && !p.rent) rows.push(['Valor por m² de terreno', brl(Math.round(p.price / p.land))]);
     rows.push(['Condomínio', TBC], ['IPTU', TBC], ['Localização', p.location]);
     return rows.map(([label, value]) => ({ label, value, color: value === TBC ? '#8b7755' : '#1b3043' }));
   }
@@ -487,24 +542,25 @@ class Component extends DCLogic {
     const cities = [...new Set(LISTINGS.map(p => p.location.split(' · ').pop()))];
     const opt = (pairs) => [{ v: '', l: 'Todos' }].concat(pairs.map(([v, l]) => ({ v, l })));
     const selects = [
-      { label: 'Finalidade', key: 'purpose', options: opt([['Venda', 'Venda']]) },
+      { label: 'Finalidade', key: 'purpose', options: opt([['Venda', 'Venda'], ['Aluguel', 'Aluguel']]) },
       { label: 'Localização', key: 'city', options: opt(cities.map(c => [c, c])) },
-      { label: 'Tipo', key: 'type', options: opt([['Casa', 'Casa'], ['Apartamento', 'Apartamento'], ['Terreno', 'Terreno'], ['Sala comercial', 'Sala comercial']]) },
+      { label: 'Tipo', key: 'type', options: opt([...new Set(LISTINGS.map(p => p.type))].map(t => [t, t])) },
       { label: 'Quartos', key: 'rooms', options: opt([['1', '1+'], ['2', '2+'], ['3', '3+'], ['4', '4+']]) },
       { label: 'Preço máximo', key: 'max', options: opt([['1000000', 'Até R$ 1 milhão'], ['3000000', 'Até R$ 3 milhões'], ['5000000', 'Até R$ 5 milhões'], ['10000000', 'Até R$ 10 milhões']]) },
     ].map(x => ({ ...x, value: f[x.key], change: setF(x.key) }));
-    const match = p => (!f.city || p.location.endsWith(f.city)) && (!f.type || p.type === f.type) && (!f.rooms || p.rooms >= +f.rooms) && (!f.max || (p.price && p.price <= +f.max));
-    const card = p => ({ ...p, p1: p.images[0], p2: p.images[1], p3: p.images[2], more: p.images.length - 3,
-      specs: this.specsFor(p), priceLabel: p.price ? brl(p.price) : 'Valor sob consulta',
-      showPpm: showPpm && !!(p.price && (p.land || p.area)), ppm: p.price && (p.land || p.area) ? brl(Math.round(p.price / (p.land || p.area))) : '',
+    const match = p => (!f.purpose || (p.rent ? 'Aluguel' : 'Venda') === f.purpose) && (!f.city || p.location.endsWith(f.city)) && (!f.type || p.type === f.type) && (!f.rooms || (p.beds || p.rooms) >= +f.rooms) && (!f.max || (p.price && !p.rent && p.price <= +f.max));
+    const card = p => ({ ...p, p1: p.images[0], p2: p.images[1] || p.images[0], p3: p.images[2] || p.images[0], more: p.images.length - 3,
+      moreLabel: p.images.length > 3 ? `+${p.images.length - 3} fotos` : '', moreBg: p.images.length > 3 ? '#1b3043b3' : 'transparent',
+      specs: this.specsFor(p), priceLabel: p.price ? brl(p.price) + (p.rent ? ' / mês' : '') : 'Valor sob consulta',
+      showPpm: showPpm && !p.rent && !!(p.price && (p.land || p.area)), ppm: p.price && (p.land || p.area) ? brl(Math.round(p.price / (p.land || p.area))) : '',
       ppmUnit: p.land ? 'm² de terreno' : 'm²',
       open: e => { e && e.preventDefault && e.preventDefault(); this.open(p.reference); } });
     const shown = LISTINGS.filter(match).map(card);
     const cur = this.current();
     const d = card(cur);
-    cur.images.slice(0, 5).forEach((src, i) => { d['g' + i] = src; d['lb' + i] = () => this.setState({ lb: i }); });
+    for (let i = 0; i < 5; i++) { d['g' + i] = cur.images[i] || cur.images[0]; d['lb' + i] = () => this.setState({ lb: Math.min(i, cur.images.length - 1) }); }
     Object.assign(d, {
-      purpose: 'Venda', photoTotal: cur.images.length, ficha: this.fichaFor(cur),
+      purpose: cur.rent ? 'Aluguel' : 'Venda', photoTotal: cur.images.length, photoLabel: cur.images.length > 5 ? `Ver as ${cur.images.length} fotos` : '', photoBg: cur.images.length > 5 ? '#1b3043b8' : 'transparent', ficha: this.fichaFor(cur),
       description: cur.description || GENERIC, hasFeatures: !!cur.features, condoTitle: cur.condoTitle || 'Condomínio', features: cur.features || [], condo: cur.condo || [],
       photos: cur.images.map((src, i) => ({ src, n: i + 1, open: () => this.setState({ lb: i }) })),
       wa: 'https://wa.me/5527988287777?text=' + encodeURIComponent(`Olá! Quero saber mais sobre o imóvel ref. ${cur.reference}: ${shareUrl(cur)}`),
