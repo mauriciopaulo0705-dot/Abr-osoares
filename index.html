@@ -178,13 +178,16 @@ a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
         </div>
       </div>
     </section>
+  </sc-if>
 
+  <sc-if value="{{ showList }}" hint-placeholder-val="{{ true }}">
     <section id="imoveis" style="padding:clamp(48px,7vw,96px) clamp(20px,4vw,56px)">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:36px">
         <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(38px,4.6vw,64px);line-height:1;margin:0;letter-spacing:-.01em">Imóveis disponíveis</h2>
 
       </div>
 
+      <sc-if value="{{ isCatalog }}" hint-placeholder-val="{{ false }}">
       <div style="background:#faf9f6;border:1px solid #e3e1dc;padding:28px 34px 30px;margin-bottom:36px;display:flex;align-items:flex-end;gap:28px;flex-wrap:wrap;font-family:'Manrope',sans-serif">
         <div style="display:flex;align-items:center;gap:14px;font-size:15px;padding-bottom:12px">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1b3043" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M15 4v4M9 10v4M17 16v4"></path></svg>Filtrar
@@ -198,6 +201,7 @@ a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
           </label>
         </sc-for>
       </div>
+      </sc-if>
       <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
         <div style="padding:48px 0;text-align:center;color:#647078;font-size:16px">Nenhum imóvel encontrado com esses filtros. <a href="#" onClick="{{ clearFilters }}" style="color:#8b7755;font-weight:600">Limpar filtros</a></div>
       </sc-if>
@@ -239,6 +243,9 @@ a{color:#1b3043;text-decoration:none}a:hover{color:#8b7755}
           </article>
         </sc-for>
       </div>
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+        <div style="text-align:center;margin-top:44px"><a href="#" onClick="{{ goCatalog }}" style="display:inline-block;background:#1b3043;color:#faf9f6;padding:16px 32px;border-radius:999px;font-weight:600;font-size:15px" style-hover="background:#2a4459">Ver todos os {{ count }} imóveis →</a></div>
+      </sc-if>
     </section>
   </sc-if>
 
@@ -460,10 +467,11 @@ const refFromHash = () => {
   const p = LISTINGS.find(x => slugOf(x.reference) === decodeURIComponent(m[1]).toLowerCase());
   return p ? p.reference : null;
 };
+const HOME_COUNT = 6;
 const BASE_TITLE = 'Abrão Soares Corretores de Imóveis';
 
 class Component extends DCLogic {
-  state = { view: refFromHash() ? 'detail' : 'home', ref: refFromHash(), f: { purpose: '', city: '', type: '', rooms: '', max: '' }, lb: null, menu: false };
+  state = { view: refFromHash() ? 'detail' : (typeof location !== 'undefined' && location.hash.toLowerCase() === '#imoveis' ? 'catalog' : 'home'), ref: refFromHash(), f: { purpose: '', city: '', type: '', rooms: '', max: '' }, lb: null, menu: false };
   componentDidMount() {
     this.onKey = e => {
       if (e.key === 'Escape' && this.state.menu) this.setState({ menu: false });
@@ -476,7 +484,8 @@ class Component extends DCLogic {
     this.onNav = () => {
       const ref = refFromHash();
       if (ref) { if (ref !== this.state.ref || this.state.view !== 'detail') { this.setState({ view: 'detail', ref, lb: null, menu: false }); window.scrollTo(0, 0); } }
-      else if (!location.hash && this.state.view === 'detail') this.setState({ view: 'home', lb: null, menu: false });
+      else if (location.hash.toLowerCase() === '#imoveis') { if (this.state.view !== 'catalog') { this.setState({ view: 'catalog', lb: null, menu: false }); window.scrollTo(0, 0); } }
+      else if (!location.hash && this.state.view !== 'home') { this.setState({ view: 'home', lb: null, menu: false }); window.scrollTo(0, 0); }
     };
     window.addEventListener('popstate', this.onNav);
     window.addEventListener('hashchange', this.onNav);
@@ -555,7 +564,8 @@ class Component extends DCLogic {
       showPpm: showPpm && !p.rent && !!(p.price && (p.land || p.area)), ppm: p.price && (p.land || p.area) ? brl(Math.round(p.price / (p.land || p.area))) : '',
       ppmUnit: p.land ? 'm² de terreno' : 'm²',
       open: e => { e && e.preventDefault && e.preventDefault(); this.open(p.reference); } });
-    const shown = LISTINGS.filter(match).map(card);
+    const isCat = this.state.view === 'catalog';
+    const shown = (isCat ? LISTINGS.filter(match) : LISTINGS.slice(0, HOME_COUNT)).map(card);
     const cur = this.current();
     const d = card(cur);
     for (let i = 0; i < 5; i++) { d['g' + i] = cur.images[i] || cur.images[0]; d['lb' + i] = () => this.setState({ lb: Math.min(i, cur.images.length - 1) }); }
@@ -568,17 +578,17 @@ class Component extends DCLogic {
     });
     const lb = this.state.lb;
     return {
-      isHome: this.state.view === 'home', isDetail: this.state.view === 'detail',
+      isHome: this.state.view === 'home', isCatalog: this.state.view === 'catalog', showList: this.state.view !== 'detail', isDetail: this.state.view === 'detail',
       count: LISTINGS.length, photoCount: LISTINGS.reduce((s, p) => s + p.images.length, 0),
       videoRef: el => { if (el) { el.muted = true; el.loop = true; el.playsInline = true; if (el.paused) el.play().catch(() => {}); } },
-      selects, shown, d, noResults: shown.length === 0,
+      selects, shown, d, noResults: isCat && shown.length === 0,
       clearFilters: e => { e.preventDefault(); this.setState({ f: { purpose: '', city: '', type: '', rooms: '', max: '' } }); },
       navHome: this.state.view === 'home' ? '#947c51' : '#1b3043', navHomeLine: this.state.view === 'home' ? 1 : 0,
-      navImoveis: this.state.view === 'detail' ? '#947c51' : '#1b3043', navImoveisLine: this.state.view === 'detail' ? 1 : 0,
+      navImoveis: this.state.view !== 'home' ? '#947c51' : '#1b3043', navImoveisLine: this.state.view !== 'home' ? 1 : 0,
       catalogCols: grid ? 'repeat(auto-fill,minmax(min(100%,420px),1fr))' : '1fr',
       cardCols: grid ? '1fr' : 'repeat(auto-fit,minmax(min(100%,440px),1fr))',
       goHome: e => { e.preventDefault(); this.setHash(null); this.setState({ view: 'home', lb: null, menu: false }); window.scrollTo(0, 0); },
-      goCatalog: e => { e.preventDefault(); this.setHash(null); this.setState({ view: 'home', lb: null, menu: false }, () => { const el = document.getElementById('imoveis'); if (el) window.scrollTo(0, el.offsetTop - 80); }); },
+      goCatalog: e => { e.preventDefault(); try { history.pushState(null, '', location.pathname + location.search + '#imoveis'); } catch (err) { location.hash = '#imoveis'; } this.setState({ view: 'catalog', lb: null, menu: false }); window.scrollTo(0, 0); },
       openFeatured: e => { e.preventDefault(); this.open('175'); },
       lbOpen: lb != null, lbSrc: lb != null ? cur.images[lb] : '', lbCounter: lb != null ? `${lb + 1} / ${cur.images.length}` : '',
       lbClose: () => this.setState({ lb: null }),
